@@ -92,23 +92,26 @@ con o sin mucho dinero, etc.) como a cambios bruscos en la situación táctica d
 batalla (pérdida de las unidades, carencia total de solaris, etc.) . <br><br>
 
 
-
-Modelo de Vizconde             |  Modelo de Fantasma     |  Modelo de cantante
-:-------------------------:|:-------------------------:|:---------------------:
-<img src="https://github.com/IAV22-G02/P3/blob/main/Viscount.png" alt="drawing" width="200"/>|  <img src="https://github.com/IAV22-G02/P3/blob/main/Ghost.png" alt="drawing" width="200"/>|  <img src="https://github.com/IAV22-G02/P3/blob/main/Singer.png" alt="drawing" width="200"/>
-
 # Descripción Punto de Partida
 
-## [Commit](https://https://github.com/IAV22-G02/P3/commit/8f2763186f347ed4252ba3a6574eedd179715527) de Punto de Partida 
+## [Commit](https://github.com/IAV22-G02/P4/commit/e4ea84e275632e71d3d0992caaceb848a236ca00) de Punto de Partida 
 
-La escena inicial contiene un **Mapa** con todas las estancias antes comentadas y sus correspondientes conexiones entre ellas, modelos del público, el vizconde, el fantasma y la cantante, además de los prefabs de objetos interactivos como son el piano, las palancas y las barcas. Y en cuanto a scripts se encuentran:<br>
+La escena inicial contiene un **Escenario de batalla** con todas las instalaciones antes comentadas, con un estandarte representando al bando que pertenece,y unidades extractoras, exploradoras y destructoras de cada bando, cada una a su vez, representada por un color amarillo o azul.<br>
+A su vez, también se encuentran implementadas mallas de navegación y herramientas de percepción y movimiento dinámico de Unity.<br>
+ Y en cuanto a scripts se encuentran:<br>
 
-**Game Blackboarf**: Clase que tiene la información de las estancias del mapa y palancas<br>
-**Player**: Clase encargada de gestionar las acciones del vizconde<br>
-**Cantante**: Clase encargada del comportamiento y movimiento de la cantante<br>
-**CameraMananager**: Clase que gestiona los diferentes puntos de vista en el escenario<br>
-**Scripts de interacción**: Múltiples scripts de objetos interactivos que avisan de un contacto con ellos<br>
-**NavMesh, StateManager y Behaviour Tree**: Pertenecientes a los personajes, que se encargan de la toma de decisiones y pathing por el mapa<br>
+**Health**: Se explica por si solo, perteneciente a la gran mayoría de los objetos<br>
+**Proyectile**: También bastante autoexplicativo, afecta a Health.<br>
+**Village**: Clase encargada de gestionar los comportamientos de los poblados<br>
+**Facilities**: Clase encargada de gestionar los comportamientos de las intalaciones encargadas de la logística del ejército.<br>
+**Scripts de instalaciones**: Clases de comportamiento de las diferentes instalaciones(Bases, Procesamiento...) 
+**Tower**: Clase encargada del comportamiento agresivo y neutral frente a amenazas<br>
+**Unit**: Clase que gestiona los diferentes comportamientos inteligentes y movilidad del ejército<br>
+**Scripts de unidad**: Clases exclusivas a cada tipo de unidad de juego(destructora, exploradora y extractora)
+**RTSManagers**: Clases usadas para la gestión de funcionalidades y/o comportamientos, utilizados por el escenario, responsable de identificar y mantener la lista de todos los recursos y demás elementos, y un gamemanager, responsable de poner en marcha el juego, iniciar su estado y llevar un seguimiento de todos sus cambios.
+**RTSContollers**: Clases que usan un mapa de influencia y/o corrutinas para controlar las decisiones que necesitará cada bando para su correcto uso, entre ellos se encuentran los automáticos(AI y Random), que permite implementar bots tácticos para jugar automáicamente al juego, usando una corrutina,y del jugador(Player y PlayerRandom), que ofrecen una interfaz al jugador humano para que mande órdenes a uno de los ejécitos.
+**Scripts de tasks**: Múltiples scripts de tareas que se asignan a su correspondiente unidad en tiempo de ejecución<br>
+**Componentes NavMesh**: Componente usado en las unidades para facilitar la navegación<br>
 
 # Estructura de Clases
 
@@ -116,22 +119,23 @@ La escena inicial contiene un **Mapa** con todas las estancias antes comentadas 
 
 ## Descripción de la Solución
 
-La solución consta de la implementación de  nuevos componentes, cuyo pseudocódigo está más abajo:
-+ Componente TreeDecisionMaking, que se encarga de la gestión de decisiones de los behaviour trees.
-+ El componente PathFinder, que usaremos para encontrar el camino más corto a la sala del fantasma cuando secuestra la cantante y que lo siga.
-+ Componente Wander o Merodeo, para que la cantante vague por las estancias
-+ El componente StateMachineManager, encargado de  gestionar los states del statemachine.
-+ Componente TaskSelector, que decidirá las acciones que tomará el fantasma al llegar a una sala con ayuda del behaviour tree.
-
-Además usaremos algunos los componentes implementados en la práctica 2, pero algo modificados para este ejercicio, que se pueden ver en el enlace de más abajo.
-Sobretodo los componentes para el movimiento de Teseo. Por otro lado, cambiaremos un poco el comportamiento de Merodeo de la cantante para que se mueva como si estuviera "perdida" por el mapa. Más abajo se puede ver el código de lo que se tiene en mente. La explicacion de la estructura se puede ver [aquí](https://github.com/IAV22-G02/P2)
+La solución no consta de la implementación de  nuevos componentes, sino del correcto funcionamiento de los ya existentes, y las posibles la mejora de estos, entre ellas:
++ Crear un Script Scenario y darle algunas propiedades como el nombre, autor, nivel de dificultad, nivel de justicia o simetría, número de jugadores(RTSSceneraioManager).
++ Añadir unas constantes que proporcionen valores por defecto para atributos de las instalaciones como su coste, velocidad, etc(Facilities).
++ Añadir un método de Reset que permita volver a los valores iniciales de la instalación (Facilities).
++ Cargar distintos árboles de comportamiento, según se esté modo de ataque (como las exploradoras cuando persiguen) o más tranquilo(Unit).
++ Los poblados una vez destruidos puedan regenerarse y volver a aparecer(Village y Tower).
++ confirmar que los misiles no colisionan ni interfieren entre sí y tener prefabs distintos para cada tipo de proyectil(Proyectil).
 
 ### Opcionales
 
 La solución también consta de funcionalidades opcionales tales como:
-+ Mejora del razonamiento del fantasma sobre el estado y la posición de los distintos
-elementos (las barcas, la cantante, el vizconde, etc.), de modo que pueda tomar
-decisiones más inteligentes, considerando los efectos causados por otros personajes
++ Mejora aspectos del escenario, sonidos o efectos visuales para mejorar su
+estética.
++  Mejora aspectos de la interfaz y el control para el jugador humano.
++ Mejora aspectos del movimiento y la navegación de las distintas unidades,manteniendo las condiciones normales básicas.
++ Mejora el controlador para jugadores humanos, de manera que reciba feedback visual y
+sea posible precisar la posición a la que ordenar moverse a las unidades seleccionadas.
 
 
 El pseudocódigo de dichos componentes:
