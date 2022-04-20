@@ -17,10 +17,11 @@ Mendoza Reyes, Juan Diego   -   juandiem@ucm.es <br>
 
 ## Resumen
 
-La práctica consiste en implementar un prototipo de una simulación de la novela **El fantasma de la opera**, 
-La novela cuenta la historia de Erik, un músico deforme que vive escondido en el sótano del Palacio de Garnier,
-después de componer su gran obra, Erik sueña con que sea interpretada por Christine Daaé, y tiene la intención de secuestrarla con el objetivo
-de que esta memorice la obra, pero debe espantar al público de la ópera, mientras que el vizconde Raoul de Chagny comprometerá sus planes. <br>
+La práctica consiste en implementar un prototipo de una simulación de combate entre dos facciones basado en la novela **Dune**, 
+La batalla tiene lugar entre las fuerzas de los Fremen y las fuerzas del Emperador y el Barón Harkonnen en el planera Arrakis.
+El cuadro temporal toma lugar diez mil años en el futuro, donde la sociedad se aprovecha económicamente de la extracción de una especia conocida como malogne,
+que es conocida por alargar la vida e incluso despierta poderes psíquicos en algunas personas.
+Paul Atrides lidera la rebelión del pueblo nativo de Arrakis contra El imperio y las Grandes Casas feudales que existen en la galaxia, como la liderada por el  Barón Vladimir Harkonnen. <br>
 
 <br>
 La práctica consta de una serie de estancias en la que se movera el Fantasma (controlado por **IA**) y el vizconde(controlado por el jugador).<br>
