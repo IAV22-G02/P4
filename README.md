@@ -56,32 +56,40 @@ HP: 20
 Precio: 30000
 Máximo número de unidades: 10
 
-Las funcionalidades mñinimas que se piden son: 
+El controlador automático: 
+Funciona a forma de capitán gneeral del ejercicto, da órdenes a la unidades de su propio ejército.
+Estas órdenes se razonan a través de sondeos del escenario, que se realizan cada frame o cada cierto tiempo.
+Estos razonamientos se realizan teniendo en cuenta el tiempo que tardan en construirse las unidades y que las órdenes muy seguidas
+y contradictorias pueden ser contraproducentes y provocar bloqueos.
+Se realizan sondeos de del escenario, intalaciones y distintas unidades, utilizando mapas de unfluencia con división de baldosas.
+Se reservan las teclas F, G y H para mostrar y ocultar las influencias de los Fremen, Graben o Harkonen, respectivamente
 
-+ **A.** Mostrar el entorno virtual (la casa de la ópera), con un esquema de división de malla de
-navegación proporcionado por Unity, donde se ubiquen todos los elementos descritos
-anteriormente. El vizconde será controlado libremente por el jugador mediante los
-cursores y una única tecla de acción para interactuar con otros elementos. Aunque haya
-cámaras que sigan a cada uno de los personajes, conviene que haya una adicional que
-nos dé la vista general del entorno [0,5 ptos.].<br><br>
+Apartados:
 
-+ **B.** Hacer que parte del público huya tras la caída de una lámpara, y regrese en cuanto está
-arreglada. Será una navegación y un movimiento trivial, sin apenas decisión [0,5 ptos.].<br><br>
++ **A.** Mostrar en una primera ejecución, sin necesidad de tocar nada, el controlador
+automático enfrentándose a sí mismo en el escenario de ejemplo del juego de
+estrategia en tiempo real proporcionado por el profesor [0,5 ptos.].<br><br>
 
-+ **C.** Representar a la cantante como un agente inteligente basado en una máquina de estados
-que pasa del escenario a las bambalinas cuando toca, que puede ser "llevada" por los
-otros dos personajes hasta otra estancia, que navega algo desorientada cuando está en
-las estancias subterráneas, y que se deja llevar por el vizconde, con la esperanza de
-reencontrar el escenario y continuar su rutina allí. Tiene navegación, movimiento y
-percepción sencillos, y decisión mediante máquina de estados [1 ptos.].<br><br>
++ **B.** Incluir la posibilidad de probar al menos una nueva variante del escenario
+desarrollada por vuestro grupo para probar el controlador automático, permitiendo
+enfrentar al controlador de IA contra un jugador humano, además de contra sí mismo
+(con los mismos o diferentes parámetros); siempre en batallas 1 contra 1 [0,5 ptos.].<br><br>
 
-+ **D.** Desarrollar el árbol de comportamiento completo del fantasma, para que busque a la
-cantante, tire las lámparas, la capture, la lleve a la celda, active las rejas, etc. [1 pto.]<br><br>
++ **C.** Visualizar a voluntad el mapa de influencia utilizado, y cómo se va actualizando según
+cambia la situación táctica del juego [1 ptos.]..<br><br>
 
-+ **E.** Usar un sistema de gestión sensorial para que el fantasma reaccione realmente a lo que
-ve (en la propia estancia o estancias vecinas visibles) y lo que oye (el canto de su musa
-y el ruido de la sala de mísica), sin tener que recurrir a información privilegiada
-(únicamente recordando lo que ha visto anteriormente) [1 pto.]. <br><br>
++ **D.** Demostrar cierta robustez en el funcionamiento del controlador, tratando de evitar la
+inactividad o los bloqueos de las unidades, así como cierta capacidad de reacción a la
+hora de defenderse del enemigo y cierta proactividad a la hora de atacarlo para ganar la
+partida [1 pto.]
+<br><br>
+
++ **E.** Demostrar mediante pruebas diseñadas a tal efecto un nivel de competencia razonable
+en el juego, aprovechando el tiempo y los recursos disponibles, venciendo sin
+problemas a controladores incompetentes, sean humanos o no. Demostrar capacidad de
+adaptación tanto a diversas situaciones iniciales (empezar con o sin muchas unidades,
+con o sin mucho dinero, etc.) como a cambios bruscos en la situación táctica de la
+batalla (pérdida de las unidades, carencia total de solaris, etc.) . <br><br>
 
 
 
