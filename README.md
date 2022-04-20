@@ -29,62 +29,32 @@ El bando enemigo se centrará en la recolecíón de recursos y en la producción
 El jugador tiene el mismo objetivo que la IA, y tendrá que competir contra ella en un entorno en el que ambos pueden recolectar los mismos recursos.
 Ambos bandos pueden contruir las mismas unidades y la misma cantidad, estas unidades son la unidad extractora (máximo 5), la unidad exploradora(máximo 30). y la unidad destructora(máximo 10).<br>
 
-## Estancias y comportamiento en estas
+## Unidades y contrucciones
 
-+ **Patio de butacas(P).** Estancia incial del público, dividido en Este y Oeste. Los espectadores huyen al vestíbulo si cae la lámpara correspondiente a su lado del patio de butacas,
-Esta conectada con el escenario y el vestíbulo, y es visible desde los palcos.
++ **Instalación base.** Es un edificio que sirve para crear unidades a modo de barracón, puede crear cualquiera de las tres unidades posibles: extractora, exploradora o destructora
+Los requisitos para la creación son tener el dinero necesario y no superar el límite de esas unidades, Puede recibir 100 puntos de daño, si se pierde, se pierde la partida.
 
-+ **Vestíbulo(V).** Es la zona más externa de la ópera, donde van los bloques de público
-cuando se asustan. Simplemente conecta con el patio de butacas.
++ **Instalación de procesamiento.** Almacena el solaris(dinero) recogido, no se le puede solicitar ninguna acción. Puede recibir 50 puntos de daño.
 
-+ **Escenario(E).** Estancia inicial de la cantante, que intercala con las bambalinas(donde se toma su descanso), también conecta con el patio de butacas, los palcos y es posible dejarse caer
-al sótano oeste, aunque no es posible volver, el fantasma no puede pisar estas estancias si hay público mirando, aunque puede capturar a la cantante y llevársela a donde quiera, soltándola 
-por voluntad propia o porque se sienta intimidado por un choque con el vizconde. Si la cantante acaba en una estancia desconocida, empieza a vagar entre estancias hasta ser encontrada por el vizconde
-que la lleva hasta una estancia que ella conozca, donde pueda volver al escenario o a las bambalinas
++ **Unidad Extractora.** Responsable de extraer la especia melange. Se le puede solicitar moverse para que cuando se encuentre con los campos de melagne empiece a extraer.
+Tras extraerlo se dirige a una instalación de procesamiento, cuando entrega la especia, conseguimos los solaris correspondientes. Salvo nueva orden, repite la extracción en bucle.
+En cada viaje obtiene 1000 solaris.
+HP: 10
+Precio: 10000
+Máximo de unidades: 5
 
-+ **Bambalinas(B).** Estancia donde suele descansar la cantante y que conecta con el escenario, el sótano oeste y que permite deslizarse por una rampa algo oculta al sótano este, sin posibilidad de regresar. 
++ **Unidad exploradora.** Unidad más ágil y con capacidad de combate. Cuando llega al lugar al que se le he mandado se queda quieta si el lugar es tranquilo. Sin embargo, si se topa con un enemigo, le ataca y le presigue,
+ya sea del bando enemigo o un poblado graben, si la atacan, esta contesta al agresor.
+DPS: 2
+HP: 5
+Precio: 15000
+Máximo número de unidades: 30
 
-+ **Palco oeste(Po).** Estancia inicial del vizconde, tiene una palanca para dejar caer la lámpara oeste del patio de butacas. 
-Conecta con el escenario, con el sótano oeste y permite ver el patio de butacas 
-
-+ **Palco oeste(Pe).** Estancia similar al palco oeste, con una palanca que se puede usar para dejar caer la lámpara este del patio de butacas. 
-Conecta con el escenario, con el sótano este y permite ver el patio de butacas, aunque sin visibilidad en el otro sentido.
-
-+ **Sótano oeste(So).**  Estancia que conecta con el palco oeste, con las bambalinas y con el
-sótano norte, aunque para recorrer esta conexión hace falta subirse a una barca. Solo puede subirse una persona(o una con una en brazos). La barca comienza en el sótano norte,
-pero hay una palanca para acercarla a cualquier lado del sótano.
-
-+ **Sótano este(Se).**  Estancia que conecta con el palco este, y tanto con el sótano norte
-como con la sala de música donde compone su obra el fantasma, aunque para recorrer estas dos
-últimas conexiones hacen falta barcas. Por defecto, la barca que lleva al sótano norte sí está en
-esta orilla, pero la que lleva a la sala de música está en la orilla contraria. Aunque se puede
-llegar a esta estancia desde las bambalinas, por una trampilla, desde aquí no se conecta con las
-bambalinas.
-
-+ **Celda(C).**  Estancia donde el fantasma deja a la cantante para completar su secuestro
-con éxito, usando una palanca que activa unas rejas que la impiden salir (y que por supuesto el
-vizconde podrá desactivar). Conecta con el sótano norte.
-
-+ **Sótano norte(N).** Estancia que conecta con la celda, además de con la sala de música,
-el sótano este y el sótano oeste a través de sus correspondientes tres barcas.
-
-+ **Sala de música(M)** Estancia inicial del fantasma, conecta mediante una barca con el sótano este, y con otra con el sótano
-norte.. El fantasma tiene el objetivo principal de secuestrar a la cantante, para lo que intentará
-buscarla en las bambalinas, en el escenario o si no logra dar con ella, explorando las demás
-estancias meticulosamente por si estuviera "perdida" por allí. No puede acceder al escenario si
-hay público mirando, de modo que, como objetivo secundario, necesita tirar las dos lámparas
-del techo para vaciar del todo el patio de butacas. Sea como sea, una vez atrapada la cantante, la
-llevará consigo hasta la celda, intentando usar siempre el camino con menor coste (recordando
-la última posición de las barcas y del vizconde que conoce, y eligiendo la ruta con menor coste,
-la que tenga más barcas a su favor y que evite al héroe de esta historia). Cuando llega hasta la
-celda la soltará allí, activará las rejas e irá hasta la sala de música, permaneciendo allí
-indefinidamente. Lo único que desconcentra al fantasma cuando está componiendo es escuchar
-a su musa cantar de nuevo en el escenario, reavivando sus deseos de secuestrarla y encerrarla
-otra vez en su celda. Por otro lado, si el fantasma llega a percibir el ruido de los golpes del
-vizconde a su piano, abandonará lo que está haciendo (soltando a la cantante) y correrá
-enfurecido hasta allí para dedicar unos segundos a arreglar semejante estropicio.
-
-
++ **Unidad destructora.** Más poderosa y resistente que la exploradora, pero también más lenta. No persigue a los enemigos ni se enfrenta a los agresores, si no que se centra en su objetivo actual.
+DPS: 5
+HP: 20
+Precio: 30000
+Máximo número de unidades: 10
 
 Las funcionalidades mñinimas que se piden son: 
 
