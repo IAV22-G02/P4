@@ -24,10 +24,10 @@ que es conocida por alargar la vida e incluso despierta poderes psíquicos en al
 Paul Atrides lidera la rebelión del pueblo nativo de Arrakis contra El imperio y las Grandes Casas feudales que existen en la galaxia, como la liderada por el  Barón Vladimir Harkonnen. <br>
 
 <br>
-La práctica consta de una serie de estancias en la que se movera el Fantasma (controlado por **IA**) y el vizconde(controlado por el jugador).<br>
-El fantasma intentará secuestrar a la cantante para llevarla a su celda, mientras que la cantante actúa en el escenario y va a la bambalinas entre actuaciones. <br>
-Mientras tanto el jugador puede poner remedio a los actos del fantasma, recolocar las lámparas que tire, sacar a la cantante de la celda y ensañarse con los muebles
-de la guarida del fantasma, lo que hace que este se enfade y por supuesto, si el jugador no interviene, el fantasma raptará a la cantante<br>
+La práctica consta de un entorno 3D que representa un campo de batalla donde se desarrolla la simulación (controlado por **IA**) cada bando tiene dos construcciones, la instalación base y la instalación de procesamiento.<br>
+El bando enemigo se centrará en la recolecíón de recursos y en la producción de unidades para destruir la la base del jugador	. <br>
+El jugador tiene el mismo objetivo que la IA, y tendrá que competir contra ella en un entorno en el que ambos pueden recolectar los mismos recursos.
+Ambos bandos pueden contruir las mismas unidades y la misma cantidad, estas unidades son la unidad extractora (máximo 5), la unidad exploradora(máximo 30). y la unidad destructora(máximo 10).<br>
 
 ## Estancias y comportamiento en estas
 
