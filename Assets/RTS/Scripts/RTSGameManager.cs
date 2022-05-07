@@ -26,49 +26,70 @@ namespace es.ucm.fdi.iav.rts
     public class RTSGameManager : MonoBehaviour
     {
         // Enumerado con los tipos de instalaciones admitidas 
-        public enum FacilityType {BASE, PROCESSING};
+        public enum FacilityType { 
+            BASE, 
+            PROCESSING};
         // Enumerado con los tipos de unidades admitidas 
-        public enum UnitType {EXTRACTION, EXPLORATION, DESTRUCTION};
+        public enum UnitType { 
+            EXTRACTION, 
+            EXPLORATION, 
+            DESTRUCTION};
 
         // Lista con todos los controladores. Lo esperado es que sean 2 (a cada uno com�nmente le llamaremos por el �ndice en esta lista + 1; ej. Jugador 1 vs Jugador 2).
-        [SerializeField] private List<RTSController> _controllers = null;
+        [SerializeField] 
+        private List<RTSController> _controllers = null;
         private List<RTSController> Controllers { get { return _controllers; } }
 
         // Cantidad inicial de dinero con la que empiezan los controladores
-        [SerializeField] private int _initialMoney = 50000;
+        [SerializeField] 
+        private int _initialMoney = 50000;
         public int InitialMoney { get { return _initialMoney; } }
 
+        [Header("Extractions")]
         // Informaci�n sobre la unidad extractora
-        [SerializeField] private int _extractionUnitCost = 10000;
+        [SerializeField] 
+        private int _extractionUnitCost = 10000;
         public int ExtractionUnitCost { get { return _extractionUnitCost; } }
-        [SerializeField] private int _extractionUnitsMax = 5;
+        [SerializeField] 
+        private int _extractionUnitsMax = 5;
         public int ExtractionUnitsMax { get { return _extractionUnitsMax; } }
         // Los prefabs de las distintas unidades. Hay dos variantes, una para los jugadores con �ndice par (como el 0) y otro para los jugadores con �ndice impar
-        [SerializeField] private GameObject _extractionUnitEvenPrefab = null;
+        [SerializeField] 
+        private GameObject _extractionUnitEvenPrefab = null;
         private GameObject ExtractionUnitEvenPrefab { get { return _extractionUnitEvenPrefab; } }
         [SerializeField] private GameObject _extractionUnitOddPrefab = null;
         private GameObject ExtractionUnitOddPrefab { get { return _extractionUnitOddPrefab; } }
 
+        [Header("Exploration")]
         // Informaci�n sobre la unidad exploradora
-        [SerializeField] private int _explorationUnitCost = 15000;
+        [SerializeField] 
+        private int _explorationUnitCost = 15000;
         public int ExplorationUnitCost { get { return _explorationUnitCost; } }
-        [SerializeField] private int _explorationUnitsMax = 20;
+        [SerializeField] 
+        private int _explorationUnitsMax = 20;
         public int ExplorationUnitsMax { get { return _explorationUnitsMax; } }
         // Los prefabs de las distintas unidades. Hay dos variantes, una para los jugadores con �ndice par (como el 0) y otro para los jugadores con �ndice impar
-        [SerializeField] private GameObject _explorationUnitEvenPrefab = null;
+        [SerializeField] 
+        private GameObject _explorationUnitEvenPrefab = null;
         private GameObject ExplorationUnitEvenPrefab { get { return _explorationUnitEvenPrefab; } }
-        [SerializeField] private GameObject _explorationUnitOddPrefab = null;
+        [SerializeField] 
+        private GameObject _explorationUnitOddPrefab = null;
         private GameObject ExplorationUnitOddPrefab { get { return _explorationUnitOddPrefab; } }
 
+        [Header("Destruction")]
         // Informaci�n sobre la unidad destructura
-        [SerializeField] private int _destructionUnitCost = 30000;
+        [SerializeField] 
+        private int _destructionUnitCost = 30000;
         public int DestructionUnitCost { get { return _destructionUnitCost; } }
-        [SerializeField] private int _destructionUnitsMax = 10;
+        [SerializeField] 
+        private int _destructionUnitsMax = 10;
         public int DestructionUnitsMax { get { return _destructionUnitsMax; } }
         // Los prefabs de las distintas unidades. Hay dos variantes, una para los jugadores con �ndice par (como el 0) y otro para los jugadores con �ndice impar
-        [SerializeField] private GameObject _destructionUnitEvenPrefab = null;
+        [SerializeField] 
+        private GameObject _destructionUnitEvenPrefab = null;
         private GameObject DestructionUnitEvenPrefab { get { return _destructionUnitEvenPrefab; } }
-        [SerializeField] private GameObject _destructionUnitOddPrefab = null;
+        [SerializeField] 
+        private GameObject _destructionUnitOddPrefab = null;
         private GameObject DestructionUnitOddPrefab { get { return _destructionUnitOddPrefab; } }
 
         // Utiliza un sencillo patr�n Singleton para dar acceso global y eliminar duplicados, aunque no crea un objeto si no estamos en una escena ni se mantiene si cambiamos de escena

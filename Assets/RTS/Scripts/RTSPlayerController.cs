@@ -43,9 +43,8 @@ namespace es.ucm.fdi.iav.rts
         private Ray ray;
 
         // Despertar el controlador del jugador, las estructuras internas que necesita
-        private void Awake()
-        {
-            // Aumenta el tama�o y cambia el color de fuente de letra para OnGUI (blanco para los humanos)
+        private void Awake(){
+
             _labelStyle = new GUIStyle();
             _labelStyle.fontSize = 16;
             _labelStyle.normal.textColor = Color.white;
