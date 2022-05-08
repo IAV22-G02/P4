@@ -23,7 +23,7 @@ namespace es.ucm.fdi.iav.rts
      * - Mostra una GUI como la que tiene ScenarioManager pero con informaci�n del juego, como nombres y autores de controladores, cantidad total de instalaciones, unidades y salud total de uno y otro jugador.
      * -Quiz� la tecla M para mostrar mapas de influencia (de ambas IAs si las hay) deber�a estar centralizada aqu�, en el GameManager.
      */
-    public class RTSGameManager : MonoBehaviour
+    public class GameManager : MonoBehaviour
     {
         // Enumerado con los tipos de instalaciones admitidas 
         public enum FacilityType { 
@@ -33,10 +33,13 @@ namespace es.ucm.fdi.iav.rts
         public enum UnitType { 
             EXTRACTION, 
             EXPLORATION, 
-            DESTRUCTION};
+            DESTRUCTION
+        };
 
         // Lista con todos los controladores. Lo esperado es que sean 2 (a cada uno com�nmente le llamaremos por el �ndice en esta lista + 1; ej. Jugador 1 vs Jugador 2).
-        [SerializeField] 
+        [SerializeField]
+        private List<RTSControllerID> players = null;
+
         private List<RTSController> _controllers = null;
         private List<RTSController> Controllers { get { return _controllers; } }
 
@@ -93,8 +96,8 @@ namespace es.ucm.fdi.iav.rts
         private GameObject DestructionUnitOddPrefab { get { return _destructionUnitOddPrefab; } }
 
         // Utiliza un sencillo patr�n Singleton para dar acceso global y eliminar duplicados, aunque no crea un objeto si no estamos en una escena ni se mantiene si cambiamos de escena
-        private static RTSGameManager _instance;
-        public static RTSGameManager Instance { get { return _instance; } }
+        private static GameManager _instance;
+        public static GameManager Instance { get { return _instance; } }
 
         /******************************************************************************/
 
@@ -118,15 +121,18 @@ namespace es.ucm.fdi.iav.rts
         // - Por seguridad podr�an tambi�n destruir los controladores, sus instalaciones y unidades, o incluso el escenario al completo...  y recrearlo todo de alguna manera, por ejemplo desde fichero en el Start. 
         private void Awake()
         {
-            if (_instance != null && _instance != this)
-            {
+            if (_instance != null && _instance != this){
                 Destroy(this.gameObject);
             }
             else
             {
                 _instance = this;
-
+                _controllers = new List<RTSController>();
                 // Se asigna la cantidad inicial de dinero a cada jugador 
+                foreach (RTSControllerID rts in players){
+                    _controllers.Add(rts.getController());
+                }
+
                 foreach (var controller in Controllers)
                     ControllersMoney.Add(InitialMoney);
 
@@ -182,6 +188,10 @@ namespace es.ucm.fdi.iav.rts
                     return index;
             }
             throw new ArgumentException("El gestor del juego no conoce este controlador");
+        }
+
+        static void RegisterController(ref RTSController controller){
+            
         }
 
         // Devuelve la lista con todos los �ndices de los controladores que hay en juego.

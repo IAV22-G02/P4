@@ -70,7 +70,7 @@ namespace es.ucm.fdi.iav.rts
             if (controller == null || unit == null)
                 throw new ArgumentNullException();
 
-            int index = RTSGameManager.Instance.GetIndex(controller);
+            int index = GameManager.Instance.GetIndex(controller);
             if (index != GetControllerIndex())
                 throw new ArgumentException("El controlador " + index + " no posee esta instalación.");
             if (index != unit.GetControllerIndex())

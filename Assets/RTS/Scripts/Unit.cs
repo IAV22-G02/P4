@@ -142,7 +142,7 @@ namespace es.ucm.fdi.iav.rts
             if (transform == null)
                 throw new ArgumentNullException("No se ha pasado una transformada para el movimiento.");
 
-            int index = RTSGameManager.Instance.GetIndex(controller);
+            int index = GameManager.Instance.GetIndex(controller);
             if (index != GetControllerIndex())
                 throw new ArgumentException("El controlador " + index + " no es quien controla a esta unidad");
 
@@ -163,7 +163,7 @@ namespace es.ucm.fdi.iav.rts
             if (transform == null)
                 throw new ArgumentNullException("No se ha pasado una transformada para el movimiento.");
 
-            int index = RTSGameManager.Instance.GetIndex(controller);
+            int index = GameManager.Instance.GetIndex(controller);
             if (index != GetControllerIndex())
                 throw new ArgumentException("El controlador " + index + " no es quien controla a esta unidad");
 
@@ -190,7 +190,7 @@ namespace es.ucm.fdi.iav.rts
             if (controller == null)
                 throw new ArgumentNullException("No se ha pasado un controlador.");
 
-            int index = RTSGameManager.Instance.GetIndex(controller);
+            int index = GameManager.Instance.GetIndex(controller);
             if (index != GetControllerIndex())
                 throw new ArgumentException("El controlador " + index + " no es quien controla a esta unidad");
 
@@ -203,7 +203,7 @@ namespace es.ucm.fdi.iav.rts
             if (Controller == null)
                 throw new ArgumentException("Esta instalación no tiene controlador");
 
-            return RTSGameManager.Instance.GetIndex(Controller);
+            return GameManager.Instance.GetIndex(Controller);
         }
 
         // Activa la unidad al comienzo de la ejecución, asignándole su controlador correspondiente, incluso al árbol de comportamiento y activando a este último también.
@@ -236,7 +236,7 @@ namespace es.ucm.fdi.iav.rts
             BehaviorTree.DisableBehavior();
 
             // Notifica al gestor del juego
-            RTSGameManager.Instance.UnitDestroyed(this); 
+            GameManager.Instance.UnitDestroyed(this); 
 
             // Y finalmente se autodestruye
             Destroy(gameObject);

@@ -45,7 +45,7 @@ namespace es.ucm.fdi.iav.rts
         // Iniciar el controlador del jugador, llamando a los otros objetos que sean necesarios
         private void Start()
         {
-            _index = RTSGameManager.Instance.GetIndex(this);
+            _index = GameManager.Instance.GetIndex(this);
         }
 
         // Dibuja la interfaz gráfica de usuario para que la utilice el jugador humano
@@ -61,49 +61,49 @@ namespace es.ucm.fdi.iav.rts
             GUILayout.BeginVertical(); 
 
             // Lista las variables importantes como el índice del jugador y su cantidad de dinero
-            GUILayout.Label("[Random C" + _index + " ] " + RTSGameManager.Instance.GetMoney(_index) + " solaris", _labelStyle); 
+            GUILayout.Label("[Random C" + _index + " ] " + GameManager.Instance.GetMoney(_index) + " solaris", _labelStyle); 
 
             // Botones que permite al jugador humano hacer ciertas acciones con su ejército
 
             if (GUILayout.Button("Create Extractor", GUILayout.ExpandWidth(false))) {
                 // Sólo si tengo al menos una instalación base, esto va a funcionar, si no no hará nada
-                List<BaseFacility> facilities = RTSGameManager.Instance.GetBaseFacilities(_index);
+                List<BaseFacility> facilities = GameManager.Instance.GetBaseFacilities(_index);
                 if (facilities.Count > 0)
                     // Se pasa una instalación base cualquiera como parámetro (aleatoria, obviamente nuestra) 
-                    RTSGameManager.Instance.CreateUnit(this, facilities[Random.Range(0, facilities.Count - 1)], RTSGameManager.UnitType.EXTRACTION); 
+                    GameManager.Instance.CreateUnit(this, facilities[Random.Range(0, facilities.Count - 1)], GameManager.UnitType.EXTRACTION); 
             }
             if (GUILayout.Button("Create Explorator", GUILayout.ExpandWidth(false)))
             {
                 // Sólo si tengo al menos una instalación base, esto va a funcionar, si no no hará nada
-                List<BaseFacility> facilities = RTSGameManager.Instance.GetBaseFacilities(_index);
+                List<BaseFacility> facilities = GameManager.Instance.GetBaseFacilities(_index);
                 if (facilities.Count > 0)
                     // Se pasa una instalación base cualquiera como parámetro (aleatoria, obviamente nuestra) 
-                    RTSGameManager.Instance.CreateUnit(this, facilities[Random.Range(0, facilities.Count - 1)], RTSGameManager.UnitType.EXPLORATION);
+                    GameManager.Instance.CreateUnit(this, facilities[Random.Range(0, facilities.Count - 1)], GameManager.UnitType.EXPLORATION);
             }
             if (GUILayout.Button("Create Destructor", GUILayout.ExpandWidth(false)))
             {
                 // Sólo si tengo al menos una instalación base, esto va a funcionar, si no no hará nada
-                List<BaseFacility> facilities = RTSGameManager.Instance.GetBaseFacilities(_index);
+                List<BaseFacility> facilities = GameManager.Instance.GetBaseFacilities(_index);
                 if (facilities.Count > 0)
                     // Se pasa una instalación base cualquiera como parámetro (aleatoria, obviamente nuestra) 
-                    RTSGameManager.Instance.CreateUnit(this, facilities[Random.Range(0, facilities.Count - 1)], RTSGameManager.UnitType.DESTRUCTION);
+                    GameManager.Instance.CreateUnit(this, facilities[Random.Range(0, facilities.Count - 1)], GameManager.UnitType.DESTRUCTION);
             }
             if (GUILayout.Button("Move Extractor", GUILayout.ExpandWidth(false))) 
             {
                 // Mueve una unidad extractora cualquiera (aleatoria)
-                List<ExtractionUnit> unitsList = RTSGameManager.Instance.GetExtractionUnits(RTSGameManager.Instance.GetIndex(this));
+                List<ExtractionUnit> unitsList = GameManager.Instance.GetExtractionUnits(GameManager.Instance.GetIndex(this));
                 ExtractionUnit unit = unitsList[Random.Range(0, unitsList.Count - 1)];
 
                 // A un punto del mapa cualquiera (tomo la posición de un recurso aleatorio) 
                 List<LimitedAccess> resourcesList = RTSScenarioManager.Instance.LimitedAccesses;
                 LimitedAccess resource = resourcesList[Random.Range(0, resourcesList.Count - 1)];
 
-                RTSGameManager.Instance.MoveUnit(this, unit, resource.transform);
+                GameManager.Instance.MoveUnit(this, unit, resource.transform);
             }
             if (GUILayout.Button("Move Explorator", GUILayout.ExpandWidth(false)))
             {
                 // Mueve una unidad exploradora cualquiera (aleatoria)
-                List<ExplorationUnit> unitsList = RTSGameManager.Instance.GetExplorationUnits(RTSGameManager.Instance.GetIndex(this));
+                List<ExplorationUnit> unitsList = GameManager.Instance.GetExplorationUnits(GameManager.Instance.GetIndex(this));
                 if (unitsList.Count > 0)
                 {
                     ExplorationUnit unit = unitsList[Random.Range(0, unitsList.Count - 1)];
@@ -114,34 +114,34 @@ namespace es.ucm.fdi.iav.rts
                     {
                         Tower tower = towersList[Random.Range(0, towersList.Count - 1)];
 
-                        RTSGameManager.Instance.MoveUnit(this, unit, tower.transform);
+                        GameManager.Instance.MoveUnit(this, unit, tower.transform);
                     }
                 }
             }
             if (GUILayout.Button("Move Destructor", GUILayout.ExpandWidth(false)))
             {
                 // Mueve una unidad destructora cualquiera (aleatoria)
-                List<DestructionUnit> unitsList = RTSGameManager.Instance.GetDestructionUnits(RTSGameManager.Instance.GetIndex(this));
+                List<DestructionUnit> unitsList = GameManager.Instance.GetDestructionUnits(GameManager.Instance.GetIndex(this));
                 if (unitsList.Count > 0)
                 {
                     DestructionUnit unit = unitsList[Random.Range(0, unitsList.Count - 1)];
 
                     // Elijo un enemigo (un índice cualquiera que no sea el mío... comprobar también que no estoy yo solo)
-                    List<int> list = RTSGameManager.Instance.GetIndexes();
-                    list.Remove(RTSGameManager.Instance.GetIndex(this));
+                    List<int> list = GameManager.Instance.GetIndexes();
+                    list.Remove(GameManager.Instance.GetIndex(this));
                     int enemyIndex = list[Random.Range(0, list.Count - 1)];
 
                     // A un punto del mapa cualquiera (tomo la posición de una instalación enemiga -base o de procesamiento- aleatoria) 
                     List<Facility> enemyFacilitiesList = new List<Facility>();
-                    foreach (var facility in RTSGameManager.Instance.GetBaseFacilities(enemyIndex)) // No se pueden asignar directamente las listas
+                    foreach (var facility in GameManager.Instance.GetBaseFacilities(enemyIndex)) // No se pueden asignar directamente las listas
                         enemyFacilitiesList.Add(facility);
-                    foreach (var facility in RTSGameManager.Instance.GetProcessingFacilities(enemyIndex)) // No se pueden asignar directamente las listas
+                    foreach (var facility in GameManager.Instance.GetProcessingFacilities(enemyIndex)) // No se pueden asignar directamente las listas
                         enemyFacilitiesList.Add(facility);
                     if (enemyFacilitiesList.Count > 0)
                     {
                         Facility enemyFacility = enemyFacilitiesList[Random.Range(0, enemyFacilitiesList.Count - 1)];
 
-                        RTSGameManager.Instance.MoveUnit(this, unit, enemyFacility.transform);
+                        GameManager.Instance.MoveUnit(this, unit, enemyFacility.transform);
                     }
                 }
             }

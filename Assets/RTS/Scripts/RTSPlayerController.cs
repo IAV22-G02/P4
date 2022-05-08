@@ -57,7 +57,7 @@ namespace es.ucm.fdi.iav.rts
         // Iniciar el controlador del jugador, llamando a los otros objetos que sean necesarios
         private void Start()
         {
-            _index = RTSGameManager.Instance.GetIndex(this);
+            _index = GameManager.Instance.GetIndex(this);
         }
 
         // Dibuja la interfaz gr�fica de usuario para que la utilice el jugador humano
@@ -73,32 +73,32 @@ namespace es.ucm.fdi.iav.rts
             GUILayout.BeginVertical(); 
 
             // Lista las variables importantes como el �ndice del jugador y su cantidad de dinero
-            GUILayout.Label("[ C" + _index + " ] " + RTSGameManager.Instance.GetMoney(_index) + " solaris", _labelStyle); 
+            GUILayout.Label("[ C" + _index + " ] " + GameManager.Instance.GetMoney(_index) + " solaris", _labelStyle); 
 
             // Botones que permite al jugador humano hacer ciertas acciones con su ej�rcito
 
             if (GUILayout.Button("Create Extractor", GUILayout.ExpandWidth(false))) {
                 // S�lo si tengo al menos una instalaci�n base, esto va a funcionar, si no no har� nada
-                List<BaseFacility> facilities = RTSGameManager.Instance.GetBaseFacilities(_index);
+                List<BaseFacility> facilities = GameManager.Instance.GetBaseFacilities(_index);
                 if (facilities.Count > 0)
                     // Se pasa una instalaci�n base cualquiera como par�metro (aleatoria, obviamente nuestra) 
-                    RTSGameManager.Instance.CreateUnit(this, facilities[Random.Range(0, facilities.Count - 1)], RTSGameManager.UnitType.EXTRACTION); 
+                    GameManager.Instance.CreateUnit(this, facilities[Random.Range(0, facilities.Count - 1)], GameManager.UnitType.EXTRACTION); 
             }
             if (GUILayout.Button("Create Explorator", GUILayout.ExpandWidth(false)))
             {
                 // S�lo si tengo al menos una instalaci�n base, esto va a funcionar, si no no har� nada
-                List<BaseFacility> facilities = RTSGameManager.Instance.GetBaseFacilities(_index);
+                List<BaseFacility> facilities = GameManager.Instance.GetBaseFacilities(_index);
                 if (facilities.Count > 0)
                     // Se pasa una instalaci�n base cualquiera como par�metro (aleatoria, obviamente nuestra) 
-                    RTSGameManager.Instance.CreateUnit(this, facilities[Random.Range(0, facilities.Count - 1)], RTSGameManager.UnitType.EXPLORATION);
+                    GameManager.Instance.CreateUnit(this, facilities[Random.Range(0, facilities.Count - 1)], GameManager.UnitType.EXPLORATION);
             }
             if (GUILayout.Button("Create Destructor", GUILayout.ExpandWidth(false)))
             {
                 // S�lo si tengo al menos una instalaci�n base, esto va a funcionar, si no no har� nada
-                List<BaseFacility> facilities = RTSGameManager.Instance.GetBaseFacilities(_index);
+                List<BaseFacility> facilities = GameManager.Instance.GetBaseFacilities(_index);
                 if (facilities.Count > 0)
                     // Se pasa una instalaci�n base cualquiera como par�metro (aleatoria, obviamente nuestra) 
-                    RTSGameManager.Instance.CreateUnit(this, facilities[Random.Range(0, facilities.Count - 1)], RTSGameManager.UnitType.DESTRUCTION);
+                    GameManager.Instance.CreateUnit(this, facilities[Random.Range(0, facilities.Count - 1)], GameManager.UnitType.DESTRUCTION);
             }
 
             if (selectedUnit != null)
@@ -144,9 +144,9 @@ namespace es.ucm.fdi.iav.rts
                             //Debug.Log("Sending Move...");
                             // Si he dado al collider del suelo (terreno), mando la unidad a un punto... si no, a la transformada
                             if (hitInfo.collider.gameObject.GetComponent<Terrain>())
-                                RTSGameManager.Instance.MoveUnit(this, selectedUnit, hitInfo.point);
+                                GameManager.Instance.MoveUnit(this, selectedUnit, hitInfo.point);
                             else
-                                RTSGameManager.Instance.MoveUnit(this, selectedUnit, hitInfo.collider.transform);
+                                GameManager.Instance.MoveUnit(this, selectedUnit, hitInfo.collider.transform);
                         }
                             
                     }

@@ -74,7 +74,7 @@ namespace es.ucm.fdi.iav.rts
             if (NavigationTarget.Value == null)
                 return TaskStatus.Failure;
 
-            int MyIndex = RTSGameManager.Instance.GetIndex(RTSController.Value);
+            int MyIndex = GameManager.Instance.GetIndex(RTSController.Value);
 
             // Si el objetivo es un objeto reconocible, se le podría pedir su MaxPositions, Radius... y hasta el número de posición cercana por el que toca seguir repartiendo 
             // (incluso aunque sea una duna/roca sería posible ponerse alrededor) 

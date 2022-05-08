@@ -40,7 +40,7 @@ namespace es.ucm.fdi.iav.rts
             if (transform == null)
                 throw new ArgumentNullException("No se ha pasado una transformada para el movimiento.");
 
-            int index = RTSGameManager.Instance.GetIndex(controller);
+            int index = GameManager.Instance.GetIndex(controller);
             if (index != GetControllerIndex())
                 throw new ArgumentException("El controlador " + index + " no es quien controla a esta unidad");
 

@@ -76,7 +76,7 @@ namespace es.ucm.fdi.iav.rts
             if (ProcessingFacility.Value == null)
             {
                 // Si no quedan instalaciones de procesamiento, no se puede establecer nada
-                var facilities = RTSGameManager.Instance.GetProcessingFacilities(ExtractionUnit.GetControllerIndex());          
+                var facilities = GameManager.Instance.GetProcessingFacilities(ExtractionUnit.GetControllerIndex());          
                 if (facilities.Count == 0)
                     return TaskStatus.Failure; 
 

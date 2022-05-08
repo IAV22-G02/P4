@@ -55,14 +55,14 @@ namespace es.ucm.fdi.iav.rts.example1
             {
                 case 0: // El primer contacto, un paso especial
                     // Lo primer es conocer el índice que me ha asignado el gestor del juego
-                    MyIndex = RTSGameManager.Instance.GetIndex(this);
+                    MyIndex = GameManager.Instance.GetIndex(this);
 
                     // Obtengo referencias a mis cosas
-                    MyBaseFacility = RTSGameManager.Instance.GetBaseFacilities(MyIndex)[0];
-                    List<int> OtherIndexes = RTSGameManager.Instance.GetIndexes();
+                    MyBaseFacility = GameManager.Instance.GetBaseFacilities(MyIndex)[0];
+                    List<int> OtherIndexes = GameManager.Instance.GetIndexes();
                     OtherIndexes.Remove(MyIndex); // Entiendo que no estoy modificando la lista original de índices...
-                    OtherBaseFacility = RTSGameManager.Instance.GetBaseFacilities(OtherIndexes[0])[0];
-                    MyProcessingFacility = RTSGameManager.Instance.GetProcessingFacilities(MyIndex)[0];
+                    OtherBaseFacility = GameManager.Instance.GetBaseFacilities(OtherIndexes[0])[0];
+                    MyProcessingFacility = GameManager.Instance.GetProcessingFacilities(MyIndex)[0];
                     // ...
 
                     // Obtengo referencias a las cosas de mi enemigo
@@ -74,47 +74,47 @@ namespace es.ucm.fdi.iav.rts.example1
 
                 case 1:
 
-                    LastUnit = RTSGameManager.Instance.CreateUnit(this, MyBaseFacility, RTSGameManager.UnitType.EXTRACTION);
+                    LastUnit = GameManager.Instance.CreateUnit(this, MyBaseFacility, GameManager.UnitType.EXTRACTION);
                     break;
 
                 case 2:
-                    RTSGameManager.Instance.MoveUnit(this, LastUnit, OtherBaseFacility.transform);
+                    GameManager.Instance.MoveUnit(this, LastUnit, OtherBaseFacility.transform);
                     break;
 
                 case 3:
-                    LastUnit = RTSGameManager.Instance.CreateUnit(this, MyBaseFacility, RTSGameManager.UnitType.DESTRUCTION);
+                    LastUnit = GameManager.Instance.CreateUnit(this, MyBaseFacility, GameManager.UnitType.DESTRUCTION);
                     break;
 
                 case 4:
-                    RTSGameManager.Instance.MoveUnit(this, LastUnit, OtherBaseFacility.transform);
+                    GameManager.Instance.MoveUnit(this, LastUnit, OtherBaseFacility.transform);
                     break;
 
                 case 5:
-                    LastUnit = RTSGameManager.Instance.CreateUnit(this, MyBaseFacility, RTSGameManager.UnitType.EXTRACTION);
+                    LastUnit = GameManager.Instance.CreateUnit(this, MyBaseFacility, GameManager.UnitType.EXTRACTION);
                     break;
 
                 case 6:
-                    RTSGameManager.Instance.MoveUnit(this, LastUnit, OtherBaseFacility.transform);
+                    GameManager.Instance.MoveUnit(this, LastUnit, OtherBaseFacility.transform);
                     break;
 
                 case 7:
-                    RTSGameManager.Instance.MoveUnit(this, LastUnit, MyProcessingFacility.transform);
+                    GameManager.Instance.MoveUnit(this, LastUnit, MyProcessingFacility.transform);
                     break;
 
                 case 8:
-                    LastUnit = RTSGameManager.Instance.CreateUnit(this, MyBaseFacility, RTSGameManager.UnitType.EXPLORATION);
+                    LastUnit = GameManager.Instance.CreateUnit(this, MyBaseFacility, GameManager.UnitType.EXPLORATION);
                     break;
 
                 case 9:
-                    RTSGameManager.Instance.MoveUnit(this, LastUnit, OtherBaseFacility.transform);
+                    GameManager.Instance.MoveUnit(this, LastUnit, OtherBaseFacility.transform);
                     break;
 
                 case 10:
-                    LastUnit = RTSGameManager.Instance.CreateUnit(this, MyBaseFacility, RTSGameManager.UnitType.EXPLORATION);
+                    LastUnit = GameManager.Instance.CreateUnit(this, MyBaseFacility, GameManager.UnitType.EXPLORATION);
                     break;
 
                 case 11:
-                    RTSGameManager.Instance.MoveUnit(this, LastUnit, MyProcessingFacility.transform);
+                    GameManager.Instance.MoveUnit(this, LastUnit, MyProcessingFacility.transform);
                     // No lo hago... pero también se podrían crear y mover varias unidades en el mismo momento, claro...
                     break;
 

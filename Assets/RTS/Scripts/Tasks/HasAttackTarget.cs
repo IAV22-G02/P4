@@ -175,7 +175,7 @@ namespace es.ucm.fdi.iav.rts
                     // Debe haber controlador asociado, salvo que se trate de una torreta
                     if (RTSController.Value == null) // A VECES FALLA ESTO, Y SI NO ES TORRETA... DEBERÍA TENER RTSController
                         throw new System.Exception("No hay controlador asociado.");
-                    MyIndex = RTSGameManager.Instance.GetIndex(RTSController.Value);
+                    MyIndex = GameManager.Instance.GetIndex(RTSController.Value);
                 }
                 else
                 {

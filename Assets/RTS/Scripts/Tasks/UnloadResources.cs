@@ -57,7 +57,7 @@ namespace es.ucm.fdi.iav.rts
             ProcessingFacility.Value.Resources += resources;
 
             // Luego se solicita al gestor del juego que procese la instalación de procesamiento.
-            RTSGameManager.Instance.Process(ProcessingFacility.Value);
+            GameManager.Instance.Process(ProcessingFacility.Value);
 
             return TaskStatus.Success;
         }

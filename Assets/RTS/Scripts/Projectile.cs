@@ -98,7 +98,7 @@ namespace es.ucm.fdi.iav.rts
         {
             if (Controller == null)
                 return -1; // Un valor que creo que no corresponde a ningún índice, porque no tengo controlador
-            return RTSGameManager.Instance.GetIndex(Controller);
+            return GameManager.Instance.GetIndex(Controller);
         }
 
         // Activa la unidad al comienzo de la ejecución, asignándole su controlador, objetivo y daño correspondiente.

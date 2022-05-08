@@ -85,7 +85,7 @@ namespace es.ucm.fdi.iav.rts
             if (Controller == null)
                 throw new ArgumentException("Esta instalación no tiene controlador");
 
-            return RTSGameManager.Instance.GetIndex(Controller);
+            return GameManager.Instance.GetIndex(Controller);
         }
 
         // Activa la instalación al comienzo de la ejecución, asignándole su controlador correspondiente 
@@ -104,7 +104,7 @@ namespace es.ucm.fdi.iav.rts
         public void DestroySelf()
         {
             // Notifica al gestor del juego
-            RTSGameManager.Instance.FacilityDestroyed(this);
+            GameManager.Instance.FacilityDestroyed(this);
 
             // Y finalmente se autodestruye
             Destroy(gameObject);
