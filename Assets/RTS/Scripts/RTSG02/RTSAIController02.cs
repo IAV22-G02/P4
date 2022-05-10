@@ -21,6 +21,9 @@ namespace es.ucm.fdi.iav.rts.G02
      */ 
     public class RTSAIController02: RTSAIController
     {
+        //Enum para determinar que queremos hacer
+        enum Prioridades {DestroyNeutralCamp, Defense, HurtEnemieEconomie, Attack }
+
         private GUIStyle _labelStyle;
         private GUIStyle _labelSmallStyle;
 
@@ -42,10 +45,20 @@ namespace es.ucm.fdi.iav.rts.G02
 
         //UNITIES
         private List<BaseFacility> MiBase;
-        private List<ProcessingFacility> MiFactoria;
+        private List<ProcessingFacility> MiFactoria;  
         private List<Extractor> MisExtractores;
         private List<ExplorationUnit> MisExploradores;
         private List<DestructionUnit> MisDestructores;
+
+        //ENEMY UNITS
+        private List<DestructionUnit> EnemyDestructores;
+        private List<BaseFacility> EnemyBase;
+        private List<ProcessingFacility> EnemyFactoria;
+        private List<ExplorationUnit> EnemyExploradores;
+        private List<ExtractionUnit> EnemyExtractores;
+
+        //Si nada más le preocupa, se encarga de dañar la economia del otro jugador
+        private Prioridades prioridad = Prioridades.HurtEnemieEconomie;
 
         // Número de paso de pensamiento 
         private int ThinkStepNumber { get; set; } = 0;
@@ -83,13 +96,46 @@ namespace es.ucm.fdi.iav.rts.G02
 
             getUnits();
 
+            myBuildings();
+
+            ScanEnemy();
+
+            for(int i = 0; i < MisExploradores.Count; i++)
+            {
+                MisExploradores[i].Move(this, EnemyExtractores[i].transform);
+            }
+
+            //if(MisDestructores.Count > 0)
+            //{
+
+            //    Vector3 dist = EnemyDestructores[0].transform.position - MisDestructores[0].transform.position;
+
+            //    if (dist.magnitude < MisDestructores[0].Radius)
+            //    {
+            //        MisDestructores[0].Attack(this, EnemyDestructores[0].transform.position);
+
+            //        Debug.Log("Ataco");
+            //    }
+            //    else MisDestructores[0].Move(this, EnemyDestructores[0].transform.position);
+            //}
+
+
+            ThinkStepNumber++;
+        }
+
+        private void myBuildings()
+        {
             MiBase = GameManager.Instance.GetBaseFacilities(MyIndex);
             MiFactoria = GameManager.Instance.GetProcessingFacilities(MyIndex);
-            
+        }
 
-
-           // MisDestructores[0].Attack(this, )
-            ThinkStepNumber++;
+        private void ScanEnemy()
+        {
+            EnemyDestructores = GameManager.Instance.GetDestructionUnits(FirstEnemyIndex);
+            EnemyExploradores = GameManager.Instance.GetExplorationUnits(FirstEnemyIndex);
+            EnemyExtractores = GameManager.Instance.GetExtractionUnits(FirstEnemyIndex);
+            EnemyBase = GameManager.Instance.GetBaseFacilities(FirstEnemyIndex);
+            EnemyFactoria = GameManager.Instance.GetProcessingFacilities(FirstEnemyIndex);
         }
 
         private void getIndexes()
