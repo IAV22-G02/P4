@@ -100,20 +100,37 @@ namespace es.ucm.fdi.iav.rts.G02
 
             ScanEnemy();
 
+            if (EnemyExtractores.Count == 0) prioridad = Prioridades.Attack;
+
             switch (prioridad)
             {
                 case Prioridades.HurtEnemieEconomie:
+                    attackEconomie();
 
-                    //Nuestros exploradore intentan herir la economia enemiga
-                    for(int i = 0; i < MisExploradores.Count; i++)
+                    break;
+
+                case Prioridades.Attack:
+
+                    for(int i = 0; i < MisDestructores.Count; i++)
                     {
-                        bool Menaced = MisExploradores[i].IsMenaced();
+                        bool Menaced = MisDestructores[i].IsMenaced();
                         Transform destiny;
 
                         if (Menaced) destiny = MiBase[0].transform;
-                        else destiny = EnemyExtractores[0].transform;
+                        else destiny = EnemyBase[0].transform;
 
-                        MisExploradores[i].Move(this, destiny);
+                        Vector3 dist = EnemyBase[0].transform.position - MisDestructores[i].transform.position;
+
+                        Debug.Log("dit:" + dist.magnitude);
+                        Debug.Log("radd:" + MisDestructores[i].Radius);
+
+                        if (dist.magnitude < MisDestructores[i].Radius)
+                        {
+                            MisDestructores[0].Attack(this, EnemyBase[0].transform.position);
+
+                            Debug.Log("Ataco");
+                        }
+                        else MisDestructores[0].Move(this, destiny);
                     }
 
                     break;
@@ -135,6 +152,22 @@ namespace es.ucm.fdi.iav.rts.G02
 
 
             ThinkStepNumber++;
+        }
+
+        private void attackEconomie()
+        {
+
+            //Nuestros exploradore intentan herir la economia enemiga
+            for (int i = 0; i < MisExploradores.Count; i++)
+            {
+                bool Menaced = MisExploradores[i].IsMenaced();
+                Transform destiny;
+
+                if (Menaced) destiny = MiBase[0].transform;
+                else destiny = EnemyExtractores[0].transform;
+
+                MisExploradores[i].Move(this, destiny);
+            }
         }
 
         private void myBuildings()

@@ -26,7 +26,7 @@ namespace es.ucm.fdi.iav.rts
     public class ExplorationUnit : Unit
     {
         // Daño que realiza al atacar
-        [SerializeField] private int _attackDamage = 1;  
+        [SerializeField] private int _attackDamage = 100;  
         public int AttackDamage { get { return _attackDamage; } protected set { _attackDamage = value; } }
 
         // Tiempo que tarda en atacar
