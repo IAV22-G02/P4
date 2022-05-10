@@ -77,12 +77,38 @@ namespace es.ucm.fdi.iav.rts.G02
         }
 
         // El método de pensar que sobreescribe e implementa el controlador, para percibir (hacer mapas de influencia, etc.) y luego actuar.
-        protected override void Think() {
+        protected override void Think()
+        {
+            getIndexes();
+
+            getUnits();
+
+            MiBase = GameManager.Instance.GetBaseFacilities(MyIndex);
+            MiFactoria = GameManager.Instance.GetProcessingFacilities(MyIndex);
             
+
+
+           // MisDestructores[0].Attack(this, )
+            ThinkStepNumber++;
+        }
+
+        private void getIndexes()
+        {
+            MyIndex = GameManager.Instance.GetIndex(this);
+
+            var indexList = GameManager.Instance.GetIndexes();
+            //Quito mi indice de esa lista
+            indexList.Remove(MyIndex);
+            //Asumo que el primer indice es el de mi enemigo
+            FirstEnemyIndex = indexList[0];
+        }
+
+        private void getUnits()
+        {
             //Creamos el número minimo de unidades extractoras
-            while(MisExtractores.Count < minDesiredExtractors)
+            while (MisExtractores.Count < minDesiredExtractors)
             {
-                
+
                 GameManager gm = GameManager.Instance;
 
                 ExtractionUnit nExtraction = gm.GetExtractionUnits(MyIndex)[MisExtractores.Count];
@@ -90,11 +116,8 @@ namespace es.ucm.fdi.iav.rts.G02
                 MisExtractores.Add(new Extractor(nExtraction));
             }
 
-
             MisExploradores = GameManager.Instance.GetExplorationUnits(MyIndex);
             MisDestructores = GameManager.Instance.GetDestructionUnits(MyIndex);
-
-            ThinkStepNumber++;
         }
     }
 }
