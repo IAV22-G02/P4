@@ -58,6 +58,7 @@ namespace es.ucm.fdi.iav.rts.G02
         ExtractionUnit extractor;
         public bool extrayendo;
         LimitedAccess melange;
+
         public Extractor(ExtractionUnit ext) {
             extractor = ext;
             extrayendo = false;

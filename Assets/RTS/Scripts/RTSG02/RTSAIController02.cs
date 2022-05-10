@@ -16,7 +16,8 @@ namespace es.ucm.fdi.iav.rts.G02
 {
     /*
      * Ejemplo básico sobre cómo crear un controlador basado en IA para el minijuego RTS.
-     * Únicamente mandan unas órdenes cualquiera, para probar cosas aleatorias... pero no realiza análisis táctico, ni considera puntos de ruta tácticos, ni coordina acciones de ningún tipo .
+     * Únicamente mandan unas órdenes cualquiera, para probar cosas aleatorias... 
+     * pero no realiza análisis táctico, ni considera puntos de ruta tácticos, ni coordina acciones de ningún tipo .
      */ 
     public class RTSAIController02: RTSAIController
     {
@@ -27,7 +28,8 @@ namespace es.ucm.fdi.iav.rts.G02
         public int minDesiredDestructors = 2;
         public int minDesiredExplorers = 2;
 
-        // No necesita guardar mucha información porque puede consultar la que desee por sondeo, incluida toda la información de instalaciones y unidades, tanto propias como ajenas
+        // No necesita guardar mucha información porque puede consultar la que desee por sondeo,
+        // incluida toda la información de instalaciones y unidades, tanto propias como ajenas
 
         // Mi índice de controlador y un par de instalaciones para referenciar
         private int MyIndex { get; set; }
@@ -55,9 +57,10 @@ namespace es.ucm.fdi.iav.rts.G02
         private void Awake()
         {
             Name = "Example 2";
+
             Author = "Jose Daniel Rave Robayo | " +
                      " Ángel López Benitez |" + 
-                     " Iván Prado" + 
+                     " Iván Prado Echegaray" + 
                      "Juan Diego Mendoza Reyes";
 
             _labelStyle = new GUIStyle();
@@ -67,10 +70,29 @@ namespace es.ucm.fdi.iav.rts.G02
             _labelSmallStyle = new GUIStyle();
             _labelSmallStyle.fontSize = 11;
             _labelSmallStyle.normal.textColor = Color.white;
+
+            MisExtractores = new List<Extractor>();
+            MisExploradores = new List<ExplorationUnit>();
+            MisDestructores = new List<DestructionUnit>();
         }
 
         // El método de pensar que sobreescribe e implementa el controlador, para percibir (hacer mapas de influencia, etc.) y luego actuar.
         protected override void Think() {
+            
+            //Creamos el número minimo de unidades extractoras
+            while(MisExtractores.Count < minDesiredExtractors)
+            {
+                
+                GameManager gm = GameManager.Instance;
+
+                ExtractionUnit nExtraction = gm.GetExtractionUnits(MyIndex)[MisExtractores.Count];
+
+                MisExtractores.Add(new Extractor(nExtraction));
+            }
+
+
+            MisExploradores = GameManager.Instance.GetExplorationUnits(MyIndex);
+            MisDestructores = GameManager.Instance.GetDestructionUnits(MyIndex);
 
             ThinkStepNumber++;
         }
