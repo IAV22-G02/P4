@@ -100,9 +100,23 @@ namespace es.ucm.fdi.iav.rts.G02
 
             ScanEnemy();
 
-            for(int i = 0; i < MisExploradores.Count; i++)
+            switch (prioridad)
             {
-                MisExploradores[i].Move(this, EnemyExtractores[i].transform);
+                case Prioridades.HurtEnemieEconomie:
+
+                    //Nuestros exploradore intentan herir la economia enemiga
+                    for(int i = 0; i < MisExploradores.Count; i++)
+                    {
+                        bool Menaced = MisExploradores[i].IsMenaced();
+                        Transform destiny;
+
+                        if (Menaced) destiny = MiBase[0].transform;
+                        else destiny = EnemyExtractores[0].transform;
+
+                        MisExploradores[i].Move(this, destiny);
+                    }
+
+                    break;
             }
 
             //if(MisDestructores.Count > 0)
