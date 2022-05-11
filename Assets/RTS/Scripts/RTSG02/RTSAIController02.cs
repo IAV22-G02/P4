@@ -124,13 +124,22 @@ namespace es.ucm.fdi.iav.rts.G02
 
             checkBase();
 
+            if (workersUnderAttack) prioridad = Prioridades.DefenseWorkers;
+            else if (baseUnderAttack) prioridad = Prioridades.DefenseBase;
+
+            if (MisDestructores.Count == GameManager.Instance.DestructionUnitsMax ||
+                MisExploradores.Count == GameManager.Instance.ExplorationUnitsMax) prioridad = Prioridades.Attack;
+
+            Debug.Log(Name + ":" + prioridad);
+
             switch (prioridad)
             {
                 case Prioridades.HurtEnemieEconomie:
                     attackEconomie();
 
                     //Despues de atacar priorizamos crear unidades
-                    prioridad = Prioridades.CreateUnits;
+                    if (MisExploradores.Count < minDesiredExplorers) prioridad = Prioridades.CreateUnits;
+                    else prioridad = Prioridades.Attack;
 
                     break;
 
@@ -148,7 +157,7 @@ namespace es.ucm.fdi.iav.rts.G02
                     compras();
 
                     //Si tengo más destructores que el enemigo, intento ganar
-                    if (EnemyDestructores.Count < MisDestructores.Count) prioridad = Prioridades.Attack;
+                    if (EnemyDestructores.Count <= MisDestructores.Count) prioridad = Prioridades.Attack;
                     else if (EnemyExploradores.Count <= MisExploradores.Count) prioridad = Prioridades.HurtEnemieEconomie;
                     else prioridad = Prioridades.DefenseBase;
 
@@ -165,6 +174,11 @@ namespace es.ucm.fdi.iav.rts.G02
                     for (int i = 0; i < MisExploradores.Count; i++)
                     {
                         MisExploradores[i].Move(this, MisExtractores[i].getExtractor().transform);
+                    }
+
+                    for (int i = 0; i < MisDestructores.Count; i++)
+                    {
+                        MisDestructores[i].Move(this, MisExtractores[i].getExtractor().transform);
                     }
 
                     break;
@@ -209,6 +223,9 @@ namespace es.ucm.fdi.iav.rts.G02
 
             if (!workersUnderAttack && ps == PlayStyle.Agressive) prioridad = Prioridades.HurtEnemieEconomie;
             else if (!workersUnderAttack && ps == PlayStyle.Pasives) prioridad = Prioridades.CreateUnits;
+
+
+            if (MisDestructores.Count < GameManager.Instance.DestructionUnitsMax) prioridad = Prioridades.Attack;
         }
 
         private void checkBase()
@@ -244,6 +261,8 @@ namespace es.ucm.fdi.iav.rts.G02
 
             if (!baseUnderAttack && ps == PlayStyle.Agressive) prioridad = Prioridades.HurtEnemieEconomie;
             else if (!baseUnderAttack && ps == PlayStyle.Pasives) prioridad = Prioridades.CreateUnits;
+
+
         }
 
         private void defenseTheBase()
