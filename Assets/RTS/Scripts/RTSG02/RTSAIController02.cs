@@ -18,14 +18,14 @@ namespace es.ucm.fdi.iav.rts.G02
      * Ejemplo básico sobre cómo crear un controlador basado en IA para el minijuego RTS.
      * Únicamente mandan unas órdenes cualquiera, para probar cosas aleatorias... 
      * pero no realiza análisis táctico, ni considera puntos de ruta tácticos, ni coordina acciones de ningún tipo .
-     */ 
-    public class RTSAIController02: RTSAIController
+     */
+    public class RTSAIController02 : RTSAIController
     {
-        enum PlayStyle { Agressive, Pasives}
+        enum PlayStyle { Agressive, Pasives }
 
 
         //Enum para determinar que queremos hacer
-        enum Prioridades {DestroyNeutralCamp, Defense, CreateUnits ,HurtEnemieEconomie, Attack }
+        enum Prioridades { DestroyNeutralCamp, Defense, CreateUnits, HurtEnemieEconomie, Attack }
 
         private GUIStyle _labelStyle;
         private GUIStyle _labelSmallStyle;
@@ -48,7 +48,7 @@ namespace es.ucm.fdi.iav.rts.G02
 
         //UNITIES
         private List<BaseFacility> MiBase;
-        private List<ProcessingFacility> MiFactoria;  
+        private List<ProcessingFacility> MiFactoria;
         private List<Extractor> MisExtractores;
         private List<ExplorationUnit> MisExploradores;
         private List<DestructionUnit> MisDestructores;
@@ -76,8 +76,8 @@ namespace es.ucm.fdi.iav.rts.G02
             Name = "Example 2";
 
             Author = "Jose Daniel Rave Robayo | " +
-                     " Ángel López Benitez |" + 
-                     " Iván Prado Echegaray" + 
+                     " Ángel López Benitez |" +
+                     " Iván Prado Echegaray" +
                      "Juan Diego Mendoza Reyes";
 
             _labelStyle = new GUIStyle();
@@ -145,9 +145,10 @@ namespace es.ucm.fdi.iav.rts.G02
                     else prioridad = Prioridades.Defense;
 
                     break;
+
                 case Prioridades.Defense:
 
-
+                    defenseTheBase();
 
                     break;
 
@@ -155,6 +156,28 @@ namespace es.ucm.fdi.iav.rts.G02
 
 
             ThinkStepNumber++;
+        }
+
+        private void defenseTheBase()
+        {
+            for (int i = 0; i < MisDestructores.Count; i++)
+            {
+                Transform destiny;
+
+                destiny = MiBase[0].transform;
+
+                MisDestructores[i].Move(this, destiny);
+
+            }
+
+            for (int i = 0; i < MisExploradores.Count; i++)
+            {
+                MisExploradores[i].Move(this, MiBase[0].transform);
+            }
+
+            if (EnemyDestructores.Count < MisDestructores.Count) prioridad = Prioridades.Attack;
+            else if (EnemyExploradores.Count < MisExploradores.Count) prioridad = Prioridades.HurtEnemieEconomie;
+            else prioridad = Prioridades.CreateUnits;
         }
 
         private void compras()
