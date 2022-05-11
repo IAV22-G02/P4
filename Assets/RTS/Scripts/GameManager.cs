@@ -154,25 +154,25 @@ namespace es.ucm.fdi.iav.rts
         // Inicializa el estado del juego en relaci�n a otros objetos, activando todas las instalaciones y unidades del juego
         private void Start()
         {
-                // Se activan todas las instalaciones y unidades, asign�ndoles su controlador correspondiente
-                for (int index = 0; index < Controllers.Count; index++)
-                {
-                    var controller = Controllers[index];
+            // Se activan todas las instalaciones y unidades, asign�ndoles su controlador correspondiente
+            for (int index = 0; index < Controllers.Count; index++)
+            {
+                var controller = Controllers[index];
 
-                    foreach (var baseFacility in ControllersBaseFacilities[index])
-                        baseFacility.Enable(controller);
+                foreach (var baseFacility in ControllersBaseFacilities[index])
+                    baseFacility.Enable(controller);
 
-                    foreach (var processingFacility in ControllersProcessingFacilities[index])
-                        processingFacility.Enable(controller);
+                foreach (var processingFacility in ControllersProcessingFacilities[index])
+                    processingFacility.Enable(controller);
 
-                    foreach (var extractionUnit in ControllersExtractionUnits[index])
-                        extractionUnit.Enable(controller);
+                foreach (var extractionUnit in ControllersExtractionUnits[index])
+                    extractionUnit.Enable(controller);
 
-                    foreach (var explorationUnit in ControllersExplorationUnits[index])
-                        explorationUnit.Enable(controller);
+                foreach (var explorationUnit in ControllersExplorationUnits[index])
+                    explorationUnit.Enable(controller);
 
-                    foreach (var destructionUnit in ControllersDestructionUnits[index])
-                        destructionUnit.Enable(controller);
+                foreach (var destructionUnit in ControllersDestructionUnits[index])
+                    destructionUnit.Enable(controller);
             }     
         }
 
