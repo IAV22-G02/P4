@@ -14,7 +14,7 @@ using UnityEngine;
 namespace es.ucm.fdi.iav.rts
 {
     /* 
-     * La instalación de procesamiento hace las veces de refinería del ejército. Sirve para que las unidades de extracción vaya allí a descargar los recursos extraidos, para convertirlos en dinero.
+     * La instalación de procesamiento hace las veces de refinerú} del ejército. Sirve para que las unidades de extracción vaya allEa descargar los recursos extraidos, para convertirlos en dinero.
      * La cantidad de recursos se expresa con un número entero.
      * 
      * Posibles mejoras: 

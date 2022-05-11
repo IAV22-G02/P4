@@ -21,9 +21,9 @@ namespace es.ucm.fdi.iav.rts
      * Sirve para que los bots t·cticos puedan percibir y actuar en respuesta a situaciones t·cticas como estar cerca de peligrosas torretas o de interesantes recursos.
      * 
      * Posibles mejoras:
-     * - Administrar desde aquÌ algunas cuestiones como localizar el recurso m·s cercano que tiene una unidad extractora o cosas asÌ, ofrecer el servicio de poder iterar por ellos como con las c·maras, por ejemplo.
-     * - Crear un Script Scenario y darle algunas propiedades como el nombre, autor, nivel de dificultad, nivel de justicia o simetrÌa, n˙mero de jugadores, o algo asÌ.
-     * - PodrÌa introducir m·s tiempos que controlar, para congelar la acciÛn en algunos momentos como al reiniciar
+     * - Administrar desde aquÅEalgunas cuestiones como localizar el recurso m·s cercano que tiene una unidad extractora o cosas asÅE ofrecer el servicio de poder iterar por ellos como con las c·maras, por ejemplo.
+     * - Crear un Script Scenario y darle algunas propiedades como el nombre, autor, nivel de dificultad, nivel de justicia o simetr˙}, n˙mero de jugadores, o algo asÅE
+     * - Podr˙} introducir m·s tiempos que controlar, para congelar la acciÛn en algunos momentos como al reiniciar
      */
     public class RTSScenarioManager : MonoBehaviour
     {
@@ -31,7 +31,7 @@ namespace es.ucm.fdi.iav.rts
         [SerializeField] private Terrain _scenario = null;
         public Terrain Scenario { get { return _scenario; } }
 
-        // Velocidad del juego. Por defecto est· puesta al doble de lo normal.
+        // Velocidad del juego. Por defecto estÅEpuesta al doble de lo normal.
         [SerializeField] private float _timeScale = 2f;
         public float TimeScale { get { return _timeScale; } private set { _timeScale = value; } }
 
@@ -70,8 +70,8 @@ namespace es.ucm.fdi.iav.rts
         // Despierta el Singleton (lo crea) y elimina duplicados de la misma clase que pueda haber en la escena.
         // Inicializa las estructuras internas del escenario, como la escala temporal, las c·maras...
         // Posibles mejoras: 
-        // - Por seguridad podrÌan tambiÈn destruirse torretas, poblados, obst·culos... o el escenario al completo...  y recrearlo todo de alguna manera, por ejemplo desde fichero en el Start. 
-        // - Se podrÌan buscar las c·maras autom·ticamente, debajo del objecto Scenario
+        // - Por seguridad podr˙}n tambiÈn destruirse torretas, poblados, obst·culos... o el escenario al completo...  y recrearlo todo de alguna manera, por ejemplo desde fichero en el Start. 
+        // - Se podr˙}n buscar las c·maras autom·ticamente, debajo del objecto Scenario
         private void Awake()
         {
             if (_instance != null && _instance != this)
@@ -150,7 +150,7 @@ namespace es.ucm.fdi.iav.rts
             float areaHeight = 50;
             GUILayout.BeginArea(new Rect(halfWidth - halfAreaWidth, Screen.height - areaHeight, halfWidth + halfAreaWidth, Screen.height));
             GUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace(); // Realmente no lo centra... estarÌa bien centrarlo
+            GUILayout.FlexibleSpace(); // Realmente no lo centra... estar˙} bien centrarlo
 
             if (GUILayout.Button("Switch Viewpoint", GUILayout.ExpandWidth(false)))
             {
@@ -167,7 +167,7 @@ namespace es.ucm.fdi.iav.rts
             if (GUILayout.Button("Pause", GUILayout.ExpandWidth(false)))
             {
                 // Se va ciclando entre estar parado y al ritmo normal de juego
-                // Se podrÌa hacer que hubiese un ritmo que fuese EL DOBLE de r·pido
+                // Se podr˙} hacer que hubiese un ritmo que fuese EL DOBLE de r·pido
                 if (Time.timeScale == 0)
                     Time.timeScale = TimeScale;
                 else
@@ -191,7 +191,7 @@ namespace es.ucm.fdi.iav.rts
             GUILayout.EndArea();
         }
 
-        // Comprueba si una posiciÛn est· sobre la superficie de un terreno
+        // Comprueba si una posiciÛn estÅEsobre la superficie de un terreno
         // Posible mejora: Comprobar que la altura tambiÈn se corresponde con la altura del terreno en ese punto
         public bool InsideScenario(Vector3 position)
         {
@@ -211,14 +211,14 @@ namespace es.ucm.fdi.iav.rts
         }
 
         // Cuando un poblado va a ser destruido, avisa antes de autodestruirse para que se le elimine de las listas del gestor del juego.
-        // Posibles mejoras: Acabar con los poblados neutrales podrÌa suponer alg˙n tipo de penalizaciÛn para los controladores que ejecutan esas Ûrdenes...
+        // Posibles mejoras: Acabar con los poblados neutrales podr˙} suponer alg˙n tipo de penalizaciÛn para los controladores que ejecutan esas Ûrdenes...
         public void VillageDestroyed(Village village)
         {
             if (village == null)
                 throw new ArgumentNullException("No se ha pasado un poblado.");
 
             Villages.Remove(village);
-            // PodrÌa sacar un mensaje en consola
+            // Podr˙} sacar un mensaje en consola
         }
 
         // Cuando una torreta va a ser destruida, avisa antes de autodestruirse para que se le elimine de las listas del gestor del juego. 
@@ -228,7 +228,7 @@ namespace es.ucm.fdi.iav.rts
                 throw new ArgumentNullException("No se ha pasado una torreta.");
 
             Towers.Remove(tower);
-            // PodrÌa sacar un mensaje en consola
+            // Podr˙} sacar un mensaje en consola
         }
     }
 }

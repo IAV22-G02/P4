@@ -16,12 +16,12 @@ namespace es.ucm.fdi.iav.rts
 {
     /* 
      * El controlador de IA permite implementar bots tácticos para jugar automáticamente al juego, usando una corrutina para gestionar su ejecución en el tiempo.
-     * Se trata de una clase abstracta para todos los controladores de bots específicos que programemos.
+     * Se trata de una clase abstracta para todos los controladores de bots especúƒicos que programemos.
      * 
      * Posibles mejoras:
      * - Tener tiempos separados para percibir/sentir/observar y para actuar/dar órdenes, tal vez con un margen de diferencia en ms que se mantenga, en vez de sólo una de pensamiento
      * - Pensar si es interesante que deban implementarse métodos concretos para que llame el gestor del juego, o suscribirse automáticamente a eventos del mismo
-     * - Permitir cambiar el thinkTime desde la clase específica que implemente esto
+     * - Permitir cambiar el thinkTime desde la clase especúƒica que implemente esto
      */
     public abstract class RTSAIController : RTSController
     {
@@ -37,7 +37,7 @@ namespace es.ucm.fdi.iav.rts
         // Indica si debe detenerse el ciclo de pensamiento del controlador
         protected bool Stop { get; set; } = false;
 
-        // El método para actualizar no lo deberíamos usar si ya se está utilizando la corrutina responsable del pensamiento (percibir/actuar), por eso está privado.
+        // El método para actualizar no lo deberú}mos usar si ya se estEutilizando la corrutina responsable del pensamiento (percibir/actuar), por eso estEprivado.
         // En este caso arranca la corrutina de pensamiento (percibir/actuar) del controlador, sólo una vez (la primera llamada al Update) 
         private void Update()
         {

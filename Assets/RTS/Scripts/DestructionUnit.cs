@@ -18,7 +18,7 @@ namespace es.ucm.fdi.iav.rts
      * Las unidades de destrucción son las más poderosas y más enfocadas al ataque, aunque menos ágiles y más incómodads de manejar que las exploradoras (no persiguen, no responden ataques...). 
      * 
      * Posibles mejoras:
-     * - Que la distancia de ataque no sea sólo el momento en que la unidad se percata del enemigo, sino que también el ataque físicamente no llegue más allá.
+     * - Que la distancia de ataque no sea sólo el momento en que la unidad se percata del enemigo, sino que también el ataque fúicamente no llegue más allE
      * - Diferenciar el código del de la unidad exploradora, con estados (isAttacking), targetname de preferencia, sin guardar unidades enemigas como objetivos a perseguir, etc.
      */
     public class DestructionUnit : Unit
@@ -37,14 +37,14 @@ namespace es.ucm.fdi.iav.rts
 
         /********************************************************/
 
-        // Objetos auxiliares que se usan como objetivos de ataque cuando hay que ir a un punto específico del escenario
-        // Son dos y se van intercambiando para que el árbol de comportamiento detecte que se trata de una NUEVA transformada a la que ir, si damos una orden cuando otra está en marcha
+        // Objetos auxiliares que se usan como objetivos de ataque cuando hay que ir a un punto especúƒico del escenario
+        // Son dos y se van intercambiando para que el árbol de comportamiento detecte que se trata de una NUEVA transformada a la que ir, si damos una orden cuando otra estEen marcha
         private Transform _auxAttackTarget1; // Se usa cuando _auxAttackTarget es verdadero
         private Transform _auxAttackTarget2; // Se usa cuando _auxAttackTarget es falso
         private bool _auxAttackTarget = true;
 
         // Despierta la unidad y se asegura de que tiene los componentes de salud y comportamiento preparados
-        // Mejoras posibles: Que cada tipo de unidad particular también despierte e inicialice atributos con valores específicos suyos
+        // Mejoras posibles: Que cada tipo de unidad particular también despierte e inicialice atributos con valores especúƒicos suyos
         protected override void Awake()
         {
             _auxAttackTarget1 = (new GameObject("Aux Attack 1")).transform;
@@ -62,11 +62,11 @@ namespace es.ucm.fdi.iav.rts
         }
 
         // Se solicita el movimiento de esta unidad a una posición del escenario de batalla. 
-        // La unidad destructora se centrará únicamente en atacar el enmigo más cercano a la posición dada (si no hubiera enemigos, pues una torreta). 
+        // La unidad destructora se centrarEúnicamente en atacar el enmigo más cercano a la posición dada (si no hubiera enemigos, pues una torreta). 
         // Posibles mejoras:
-        // - Podría tener dos opciones: apuntar a un objeto concreto al que puedes seguir (ej. su transformada) o simplemente una posición fija.
-        // - Procurar que el árbol de comportamiento sea bastante autónomo... sólo cambiar algunas variables compartidas y automáticamente el árbol sabrá por donde ir.
-        // - Se podría devolver un booleano para saber si el movimiento se pudo realizar sin problemas.
+        // - Podrú} tener dos opciones: apuntar a un objeto concreto al que puedes seguir (ej. su transformada) o simplemente una posición fija.
+        // - Procurar que el árbol de comportamiento sea bastante autónomo... sólo cambiar algunas variables compartidas y automáticamente el árbol sabrEpor donde ir.
+        // - Se podrú} devolver un booleano para saber si el movimiento se pudo realizar sin problemas.
         public override void Move(RTSController controller, Transform transform)
         {
             if (controller == null)
@@ -84,16 +84,16 @@ namespace es.ucm.fdi.iav.rts
             // Luego se pueden consultar algunas variables compartidas del árbol de comportamiento, si hiciera falta...
             //var enemy = behaviors[i].GetVariable("Enemy") as SharedTransform;
 
-            // Se podría modificar una variable compartida del árbol de comportamiento para indicar el objetivo...
+            // Se podrú} modificar una variable compartida del árbol de comportamiento para indicar el objetivo...
             //BehaviorTree.SetVariableValue("Target", GameObject.Find("Village"));  o mejor otra opción que no se usando el nombre
         }
 
         // Se solicita el ataque de esta unidad a una transformada enemiga concreta. 
-        // Si esta unidad se mueve, se realizará un seguimiento.
+        // Si esta unidad se mueve, se realizarEun seguimiento.
         // Dependiendo de la unidad concreta, luego puede que esta se ponga a atacar alguna unidad o instalación enemiga. 
         // Posibles mejoras: 
-        // - Procurar que el árbol de comportamiento sea bastante autónomo... sólo cambiar algunas variables compartidas y automáticamente el árbol sabrá por donde ir.
-        // - Se podría devolver un booleano para saber si el ataque se pudo realizar sin problemas (pero eso implicaría esperar al resultado de lanzar proyectiles, de hecho).
+        // - Procurar que el árbol de comportamiento sea bastante autónomo... sólo cambiar algunas variables compartidas y automáticamente el árbol sabrEpor donde ir.
+        // - Se podrú} devolver un booleano para saber si el ataque se pudo realizar sin problemas (pero eso implicarú} esperar al resultado de lanzar proyectiles, de hecho).
         public void Attack(RTSController controller, Transform transform)
         {
             if (controller == null)
@@ -112,8 +112,8 @@ namespace es.ucm.fdi.iav.rts
         // Se solicita el movimiento de esta unidad a una posición concreta del escenario de batalla. 
         // Dependiendo de la unidad concreta, luego puede que esta se ponga a atacar alguna unidad o instalación enemiga. 
         // Posibles mejoras: 
-        // - Procurar que el árbol de comportamiento sea bastante autónomo... sólo cambiar algunas variables compartidas y automáticamente el árbol sabrá por donde ir.
-        // - Se podría devolver un booleano para saber si el ataque se pudo realizar sin problemas (pero eso implicaría esperar al resultado de lanzar proyectiles, de hecho).
+        // - Procurar que el árbol de comportamiento sea bastante autónomo... sólo cambiar algunas variables compartidas y automáticamente el árbol sabrEpor donde ir.
+        // - Se podrú} devolver un booleano para saber si el ataque se pudo realizar sin problemas (pero eso implicarú} esperar al resultado de lanzar proyectiles, de hecho).
         public void Attack(RTSController controller, Vector3 position)
         {
             if (controller == null)

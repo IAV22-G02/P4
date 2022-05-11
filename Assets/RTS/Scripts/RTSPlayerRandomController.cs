@@ -16,21 +16,21 @@ namespace es.ucm.fdi.iav.rts
 {
     /* 
     * El controlador del jugador permite ofrecer una interfaz al jugador humano para que mande órdenes a uno de los ejércitos del juego, aunque de manera aleatoria (sin poder elegir origen ni destino).
-    * Se trata de una clase abstracta para todos los controladores de bots específicos que programemos.
+    * Se trata de una clase abstracta para todos los controladores de bots especúƒicos que programemos.
     * 
     * Posibles mejoras:
     * - Añadir un botón para realizar un movimiento masivo (ej. ataque con todas las unidades)
     * - En lugar de usar OnGUI, crear una interfaz de usuario más moderna.
-    * - Mantener y mostrar en formato de porcentaje o barra la cantidad de salud que le queda al jugador, número de unidades, etc. Antes se mostraba así. GUILayout.Label(string.Format("Enemy Health: {0}%", Mathf.RoundToInt((currentHealth / startEnemyHealth) * 100)), labelStyle);
+    * - Mantener y mostrar en formato de porcentaje o barra la cantidad de salud que le queda al jugador, número de unidades, etc. Antes se mostraba asE GUILayout.Label(string.Format("Enemy Health: {0}%", Mathf.RoundToInt((currentHealth / startEnemyHealth) * 100)), labelStyle);
     * - Permitir que se pueda cambiar desde el inspector el tamaño de fuente y los colores, poniéndolos diferentes para cada tipo de jugador.
-    * - Adaptar la interfaz para N jugadores (mantener botones y sólo ir cambiando el índice de a quien le toca).
+    * - Adaptar la interfaz para N jugadores (mantener botones y sólo ir cambiando el ú‹dice de a quien le toca).
     */
     public class RTSPlayerRandomController : RTSController
     { 
         // El estilo para las etiquetas de la interfaz
         private GUIStyle _labelStyle;
 
-        // Mi propio índice (parecido al número de jugador que soy)
+        // Mi propio ú‹dice (parecido al número de jugador que soy)
         private int _index;
 
         // Despertar el controlador del jugador, las estructuras internas que necesita
@@ -51,7 +51,7 @@ namespace es.ucm.fdi.iav.rts
         // Dibuja la interfaz gráfica de usuario para que la utilice el jugador humano
         private void OnGUI()
         {
-            // Abrimos un área de distribución arriba y a la izquierda (si el índice del controlador es par) o a la derecha (si el índice es impar), con contenido en vertical
+            // Abrimos un área de distribución arriba y a la izquierda (si el ú‹dice del controlador es par) o a la derecha (si el ú‹dice es impar), con contenido en vertical
             float areaWidth = 150; 
             float areaHeight = 250;
             if (_index % 2 == 0)
@@ -60,13 +60,13 @@ namespace es.ucm.fdi.iav.rts
                 GUILayout.BeginArea(new Rect(Screen.width - areaWidth, 0, Screen.width, areaHeight));
             GUILayout.BeginVertical(); 
 
-            // Lista las variables importantes como el índice del jugador y su cantidad de dinero
+            // Lista las variables importantes como el ú‹dice del jugador y su cantidad de dinero
             GUILayout.Label("[Random C" + _index + " ] " + GameManager.Instance.GetMoney(_index) + " solaris", _labelStyle); 
 
             // Botones que permite al jugador humano hacer ciertas acciones con su ejército
 
             if (GUILayout.Button("Create Extractor", GUILayout.ExpandWidth(false))) {
-                // Sólo si tengo al menos una instalación base, esto va a funcionar, si no no hará nada
+                // Sólo si tengo al menos una instalación base, esto va a funcionar, si no no harEnada
                 List<BaseFacility> facilities = GameManager.Instance.GetBaseFacilities(_index);
                 if (facilities.Count > 0)
                     // Se pasa una instalación base cualquiera como parámetro (aleatoria, obviamente nuestra) 
@@ -74,7 +74,7 @@ namespace es.ucm.fdi.iav.rts
             }
             if (GUILayout.Button("Create Explorator", GUILayout.ExpandWidth(false)))
             {
-                // Sólo si tengo al menos una instalación base, esto va a funcionar, si no no hará nada
+                // Sólo si tengo al menos una instalación base, esto va a funcionar, si no no harEnada
                 List<BaseFacility> facilities = GameManager.Instance.GetBaseFacilities(_index);
                 if (facilities.Count > 0)
                     // Se pasa una instalación base cualquiera como parámetro (aleatoria, obviamente nuestra) 
@@ -82,7 +82,7 @@ namespace es.ucm.fdi.iav.rts
             }
             if (GUILayout.Button("Create Destructor", GUILayout.ExpandWidth(false)))
             {
-                // Sólo si tengo al menos una instalación base, esto va a funcionar, si no no hará nada
+                // Sólo si tengo al menos una instalación base, esto va a funcionar, si no no harEnada
                 List<BaseFacility> facilities = GameManager.Instance.GetBaseFacilities(_index);
                 if (facilities.Count > 0)
                     // Se pasa una instalación base cualquiera como parámetro (aleatoria, obviamente nuestra) 
@@ -126,7 +126,7 @@ namespace es.ucm.fdi.iav.rts
                 {
                     DestructionUnit unit = unitsList[Random.Range(0, unitsList.Count - 1)];
 
-                    // Elijo un enemigo (un índice cualquiera que no sea el mío... comprobar también que no estoy yo solo)
+                    // Elijo un enemigo (un ú‹dice cualquiera que no sea el múŒ... comprobar también que no estoy yo solo)
                     List<int> list = GameManager.Instance.GetIndexes();
                     list.Remove(GameManager.Instance.GetIndex(this));
                     int enemyIndex = list[Random.Range(0, list.Count - 1)];

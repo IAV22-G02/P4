@@ -18,10 +18,10 @@ namespace es.ucm.fdi.iav.rts
      * La instalación base hace las veces de barracón del ejército. Tiene como función principal el crear nuevas unidades, que genera y situa de manera ordenada a su alrededor.
      * 
      * Posibles mejoras: 
-     * - Averiguar por qué a veces ocurre que se posicionan en otra parte de la malla de navegación, según posición y rotación de la instalación (como si tuviesen problemas en posicionarlas donde corresponde)
+     * - Averiguar por quEa veces ocurre que se posicionan en otra parte de la malla de navegación, según posición y rotación de la instalación (como si tuviesen problemas en posicionarlas donde corresponde)
      * - Tener en cuenta la altura del suelo en cada situación de unidades
-     * - Comprobar físicamente cada vez que no hay obstáculos de ningún tipo obstruyendo las posiciones donde se generan las unidades
-     * - Tal vez generar las unidades en el techo de la instalación base, que sería una superficie navegable desde la que dejarse caer al resto de la malla de navegación. Se evitaría generar una nueva unidad si no se ha vaciado previamente dicho techo de la instalación.
+     * - Comprobar fúicamente cada vez que no hay obstáculos de ningún tipo obstruyendo las posiciones donde se generan las unidades
+     * - Tal vez generar las unidades en el techo de la instalación base, que serú} una superficie navegable desde la que dejarse caer al resto de la malla de navegación. Se evitarú} generar una nueva unidad si no se ha vaciado previamente dicho techo de la instalación.
      */
     public class BaseFacility : Facility
     {
@@ -56,7 +56,7 @@ namespace es.ucm.fdi.iav.rts
         }
 
         // Se comprueba que es posible situar la unidad en una posición correcta de la instalación (ahora mismo siempre se permite hacerlo)
-        // Posibles mejoras: Devolver falso en caso de que ya esté ocupado el espacio de generación (sea con unidades ya creadas, o con cualquier otro objeto que esté por allí)
+        // Posibles mejoras: Devolver falso en caso de que ya estEocupado el espacio de generación (sea con unidades ya creadas, o con cualquier otro objeto que estEpor allE
         public bool CanPlaceUnit()
         {
             return true;
@@ -64,7 +64,7 @@ namespace es.ucm.fdi.iav.rts
 
         // Se situa la unidad en una posición correcta de la instalación, como sea posible
         // Por seguridad, se pide la referencia del controlador que sea dueño tanto de la instalación como de la unidad
-        // Posibles mejoras: Podría devolver simplemente falso si no es posible ubicarla en esta instalación base.
+        // Posibles mejoras: Podrú} devolver simplemente falso si no es posible ubicarla en esta instalación base.
         public void PlaceUnit(RTSController controller, Unit unit)
         {
             if (controller == null || unit == null)
@@ -76,10 +76,10 @@ namespace es.ucm.fdi.iav.rts
             if (index != unit.GetControllerIndex())
                 throw new ArgumentException("El controlador " + index + " no posee la unidad que va a crearse.");
 
-            // Código que podía ser estático para comprobar si ha quedado libre la posición de la transformada original de generación (bueno, un poco más alta), para reiniciar el conteo de la situación de unidades
+            // Código que podú} ser estático para comprobar si ha quedado libre la posición de la transformada original de generación (bueno, un poco más alta), para reiniciar el conteo de la situación de unidades
             Vector3 overlapPosition = new Vector3(SpawnTransform.position.x, SpawnTransform.position.y + 1.5f, SpawnTransform.position.z);
-            var hitColliders = Physics.OverlapSphere(overlapPosition, 1f); // Podría usar otros valores algo más grandes en vez de subir 1.5 y hacer esfera de radio 1
-            if (hitColliders.Length == 0) // No hay ningún collider allí
+            var hitColliders = Physics.OverlapSphere(overlapPosition, 1f); // Podrú} usar otros valores algo más grandes en vez de subir 1.5 y hacer esfera de radio 1
+            if (hitColliders.Length == 0) // No hay ningún collider allE
             {
                 _row = 0;
                 _column = 0;
@@ -92,7 +92,7 @@ namespace es.ucm.fdi.iav.rts
                 _column = 0;
             }
             unit.transform.position = SpawnTransform.position + SpawnTransform.right * _column * ColumnSpacing + SpawnTransform.forward * _row * RowSpacing;
-            //unit.transform.rotation = SpawnTransform.rotation; // Podría irse cambiando algo esta rotación inicial, aunque sea aleatoriamente
+            //unit.transform.rotation = SpawnTransform.rotation; // Podrú} irse cambiando algo esta rotación inicial, aunque sea aleatoriamente
 
             _column++;
         }                      

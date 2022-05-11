@@ -37,7 +37,7 @@ namespace es.ucm.fdi.iav.rts.G02
         // No necesita guardar mucha información porque puede consultar la que desee por sondeo,
         // incluida toda la información de instalaciones y unidades, tanto propias como ajenas
 
-        // Mi índice de controlador y un par de instalaciones para referenciar
+        // Mi ú‹dice de controlador y un par de instalaciones para referenciar
         private int MyIndex { get; set; }
         private int FirstEnemyIndex { get; set; }
         private BaseFacility MyFirstBaseFacility { get; set; }

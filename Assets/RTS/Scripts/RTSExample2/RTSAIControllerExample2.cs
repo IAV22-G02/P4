@@ -21,7 +21,7 @@ namespace es.ucm.fdi.iav.rts.example2
     {
         // No necesita guardar mucha información porque puede consultar la que desee por sondeo, incluida toda la información de instalaciones y unidades, tanto propias como ajenas
 
-        // Mi índice de controlador y un par de instalaciones para referenciar
+        // Mi ú‹dice de controlador y un par de instalaciones para referenciar
         private int MyIndex { get; set; }
         private int FirstEnemyIndex { get; set; }
         private BaseFacility MyFirstBaseFacility { get; set; }
@@ -48,15 +48,15 @@ namespace es.ucm.fdi.iav.rts.example2
             // Actualizo el mapa de influencia 
             // ...
 
-            // Para las órdenes aquí estoy asumiendo que tengo dinero de sobra y que se dan las condiciones de todas las cosas...
-            // (Ojo: esto no debería hacerse porque si me equivoco, causaré fallos en el juego... hay que comprobar que cada llamada tiene sentido y es posible hacerla)
+            // Para las órdenes aquEestoy asumiendo que tengo dinero de sobra y que se dan las condiciones de todas las cosas...
+            // (Ojo: esto no deberú} hacerse porque si me equivoco, causarEfallos en el juego... hay que comprobar que cada llamada tiene sentido y es posible hacerla)
 
-            // Aquí lo suyo sería elegir bien la acción a realizar. 
+            // AquElo suyo serú} elegir bien la acción a realizar. 
             // En este caso como es para probar, voy dando a cada vez una orden de cada tipo, todo de seguido y muy aleatorio... 
             switch (ThinkStepNumber)
             {
                 case 0:
-                    // Lo primer es conocer el índice que me ha asignado el gestor del juego
+                    // Lo primer es conocer el ú‹dice que me ha asignado el gestor del juego
                     MyIndex = GameManager.Instance.GetIndex(this);
 
                     // Obtengo referencias a mis cosas
@@ -118,7 +118,7 @@ namespace es.ucm.fdi.iav.rts.example2
 
                 case 11:
                     GameManager.Instance.MoveUnit(this, LastUnit, MyFirstProcessingFacility.transform);
-                    // No lo hago... pero también se podrían crear y mover varias unidades en el mismo momento, claro...
+                    // No lo hago... pero también se podrú}n crear y mover varias unidades en el mismo momento, claro...
                     break;
 
                 case 12:

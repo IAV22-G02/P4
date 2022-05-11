@@ -15,7 +15,7 @@ using UnityEngine;
 namespace es.ucm.fdi.iav.rts
 {
     /* 
-     * Las unidades de extracción sirven para obtener los recursos del escenario, no son capaces de atacar pero sí reciben daño.
+     * Las unidades de extracción sirven para obtener los recursos del escenario, no son capaces de atacar pero sEreciben daño.
      */ 
     public class ExtractionUnit : Unit
     {
@@ -27,12 +27,12 @@ namespace es.ucm.fdi.iav.rts
         public int Resources { get; set; } = 0;
 
         // Se solicita el movimiento de esta unidad a una posición del escenario de batalla. 
-        // La unidad extractora intentará extraer los recursos del campos más cercano a la posición dada. 
+        // La unidad extractora intentarEextraer los recursos del campos más cercano a la posición dada. 
         // Posibles mejoras:
-        // - Podría tener dos opciones: apuntar a un objeto concreto al que puedes seguir (ej. su transformada) o simplemente una posición fija.
-        // - Procurar que el árbol de comportamiento sea bastante autónomo... sólo cambiar algunas variables compartidas y automáticamente el árbol sabrá por donde ir.
-        // - Se podría devolver un booleano para saber si el movimiento se pudo realizar sin problemas.
-        // - Considerar si es interesante que haya una variable en la unidad para saber a qué instalación de procesamiento está 'asociada'.
+        // - Podrú} tener dos opciones: apuntar a un objeto concreto al que puedes seguir (ej. su transformada) o simplemente una posición fija.
+        // - Procurar que el árbol de comportamiento sea bastante autónomo... sólo cambiar algunas variables compartidas y automáticamente el árbol sabrEpor donde ir.
+        // - Se podrú} devolver un booleano para saber si el movimiento se pudo realizar sin problemas.
+        // - Considerar si es interesante que haya una variable en la unidad para saber a quEinstalación de procesamiento estE'asociada'.
         public override void Move(RTSController controller, Transform transform)
         {
             if (controller == null)
@@ -50,7 +50,7 @@ namespace es.ucm.fdi.iav.rts
             // Luego se pueden consultar algunas variables compartidas del árbol de comportamiento, si hiciera falta...
             //var enemy = behaviors[i].GetVariable("Enemy") as SharedTransform;
 
-            // Se podría modificar una variable compartida del árbol de comportamiento para indicar el objetivo...
+            // Se podrú} modificar una variable compartida del árbol de comportamiento para indicar el objetivo...
             //BehaviorTree.SetVariableValue("Target", GameObject.Find("Village"));  o mejor otra opción que no se usando el nombre
         }
     }
