@@ -101,7 +101,6 @@ namespace es.ucm.fdi.iav.rts.G02
             //Empieza con un rush para da�ar la economia enemiga
             if (ps == PlayStyle.Agressive) prioridad = Prioridades.HurtEnemieEconomie;
             else if (ps == PlayStyle.Pasives) prioridad = Prioridades.CreateUnits; //Si es pasivo, se encarga de defender y aumentar su economia
-
         }
 
         // El m�todo de pensar que sobreescribe e implementa el controlador, para percibir (hacer mapas de influencia, etc.) y luego actuar.
@@ -178,6 +177,7 @@ namespace es.ucm.fdi.iav.rts.G02
                     break;
 
             }
+
             ThinkStepNumber++;
         }
 

@@ -180,6 +180,7 @@ namespace es.ucm.fdi.iav.rts
                 MoveTarget = _auxMoveTarget2;
                 _auxMoveTarget = true;
             }
+
         }
 
         // ES SUTILMENTE DIFERENTE PEDIR A UNA UNIDAD QUE SE QUEDE QUIETA, MANDANDO UN MOVE A SU PROPIA POSICIÓN, QUE PEDIR QUE NO TENGA ORDEN DE MOVERSE
