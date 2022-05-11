@@ -74,6 +74,7 @@ namespace es.ucm.fdi.iav.rts.G02
         // Despierta el controlado y configura toda estructura interna que sea necesaria
         private void Awake()
         {
+            Debug.Log("dadawda");
             Name = "Example 2";
 
             Author = "Jose Daniel Rave Robayo | " +
@@ -243,6 +244,7 @@ namespace es.ucm.fdi.iav.rts.G02
                     GameManager.UnitType.EXTRACTION).GetComponent<ExtractionUnit>());
 
                 //Asignarle un campo de melagne, que no se como se hace
+                actExtractor.getExtractor().Move(this, getMelangeToBuy(MiFactoria[0].transform.position).transform.position);
 
                 ExtractorJustCreated = true;
             }
@@ -380,6 +382,24 @@ namespace es.ucm.fdi.iav.rts.G02
 
             MisExploradores = GameManager.Instance.GetExplorationUnits(MyIndex);
             MisDestructores = GameManager.Instance.GetDestructionUnits(MyIndex);
+        }
+
+        private LimitedAccess getMelangeToBuy(Vector3 initPos)
+        {
+            LimitedAccess actMelange = null;
+
+            float distance = 100000;
+            foreach (LimitedAccess melange in RTSScenarioManager.Instance.LimitedAccesses)
+            {
+                float melangeDistance = (initPos - melange.transform.position).magnitude;
+                if (melange.OccupiedBy == null && melangeDistance < distance)
+                {
+                    actMelange = melange;
+                    distance = melangeDistance;
+                }
+            }
+            return actMelange;
+
         }
     }
 }
