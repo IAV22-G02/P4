@@ -12,7 +12,7 @@ namespace es.ucm.fdi.iav.rts.G02
         VOID
     }
 
-    public enum Unit{
+    public enum UnitPurpose{
         Attack, Defense
     }
 

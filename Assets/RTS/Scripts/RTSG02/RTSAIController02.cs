@@ -21,8 +21,11 @@ namespace es.ucm.fdi.iav.rts.G02
      */ 
     public class RTSAIController02: RTSAIController
     {
+        enum PlayStyle { Agressive, Pasives}
+
+
         //Enum para determinar que queremos hacer
-        enum Prioridades {DestroyNeutralCamp, Defense, HurtEnemieEconomie, Attack }
+        enum Prioridades {DestroyNeutralCamp, Defense, CreateUnits ,HurtEnemieEconomie, Attack }
 
         private GUIStyle _labelStyle;
         private GUIStyle _labelSmallStyle;
@@ -57,14 +60,15 @@ namespace es.ucm.fdi.iav.rts.G02
         private List<ExplorationUnit> EnemyExploradores;
         private List<ExtractionUnit> EnemyExtractores;
 
-        //Si nada más le preocupa, se encarga de dañar la economia del otro jugador
-        private Prioridades prioridad = Prioridades.HurtEnemieEconomie;
+        private Prioridades prioridad;
+
+        bool ExtractorJustCreated = false;
 
         // Número de paso de pensamiento 
         private int ThinkStepNumber { get; set; } = 0;
 
         // Última unidad creada
-        private Unit LastUnit { get; set; }
+        private UnitPurpose LastUnit { get; set; }
 
         // Despierta el controlado y configura toda estructura interna que sea necesaria
         private void Awake()
@@ -87,6 +91,15 @@ namespace es.ucm.fdi.iav.rts.G02
             MisExtractores = new List<Extractor>();
             MisExploradores = new List<ExplorationUnit>();
             MisDestructores = new List<DestructionUnit>();
+
+            //Chosing playStyle
+            PlayStyle ps = (PlayStyle)Random.Range(0, 2);
+
+            //Empieza con un rush para dañar la economia enemiga
+            if (ps == PlayStyle.Agressive) prioridad = Prioridades.HurtEnemieEconomie;
+            else if (ps == PlayStyle.Pasives) prioridad = Prioridades.CreateUnits; //Si es pasivo, se encarga de defender y aumentar su economia
+
+            Debug.Log(ps);
         }
 
         // El método de pensar que sobreescribe e implementa el controlador, para percibir (hacer mapas de influencia, etc.) y luego actuar.
@@ -100,6 +113,7 @@ namespace es.ucm.fdi.iav.rts.G02
 
             ScanEnemy();
 
+            //Si conseguimos dañar suficiente la economia enemiga, atacamos
             if (EnemyExtractores.Count == 0) prioridad = Prioridades.Attack;
 
             switch (prioridad)
@@ -107,51 +121,135 @@ namespace es.ucm.fdi.iav.rts.G02
                 case Prioridades.HurtEnemieEconomie:
                     attackEconomie();
 
+                    //Despues de atacar priorizamos crear unidades
+                    prioridad = Prioridades.CreateUnits;
+
                     break;
 
                 case Prioridades.Attack:
 
-                    for(int i = 0; i < MisDestructores.Count; i++)
-                    {
-                        bool Menaced = MisDestructores[i].IsMenaced();
-                        Transform destiny;
+                    sendDestructorsToEnemyBase();
 
-                        if (Menaced) destiny = MiBase[0].transform;
-                        else destiny = EnemyBase[0].transform;
-
-                        Vector3 dist = EnemyBase[0].transform.position - MisDestructores[i].transform.position;
-
-                        Debug.Log("dit:" + dist.magnitude);
-                        Debug.Log("radd:" + MisDestructores[i].Radius);
-
-                        if (dist.magnitude < MisDestructores[i].Radius)
-                        {
-                            MisDestructores[0].Attack(this, EnemyBase[0].transform.position);
-
-                            Debug.Log("Ataco");
-                        }
-                        else MisDestructores[0].Move(this, destiny);
-                    }
+                    //Despues de intentar atacar el nexo enemigo, defendemos
+                    prioridad = Prioridades.Defense;
 
                     break;
+
+                case Prioridades.CreateUnits:
+
+                    compras();
+
+                    //Si tengo más destructores que el enemigo, intento ganar
+                    if (EnemyDestructores.Count < MisDestructores.Count) prioridad = Prioridades.Attack;
+                    else if (EnemyExploradores.Count <= MisExploradores.Count) prioridad = Prioridades.HurtEnemieEconomie;
+                    else prioridad = Prioridades.Defense;
+
+                    break;
+                case Prioridades.Defense:
+
+
+
+                    break;
+
             }
-
-            //if(MisDestructores.Count > 0)
-            //{
-
-            //    Vector3 dist = EnemyDestructores[0].transform.position - MisDestructores[0].transform.position;
-
-            //    if (dist.magnitude < MisDestructores[0].Radius)
-            //    {
-            //        MisDestructores[0].Attack(this, EnemyDestructores[0].transform.position);
-
-            //        Debug.Log("Ataco");
-            //    }
-            //    else MisDestructores[0].Move(this, EnemyDestructores[0].transform.position);
-            //}
 
 
             ThinkStepNumber++;
+        }
+
+        private void compras()
+        {
+            //Priorizamos nuestra propia economia, creamos alguna unidad recolectora adicional para jugar más a Macro Game
+            int money = GameManager.Instance.GetMoney(MyIndex);
+            int unitMax = GameManager.Instance.ExtractionUnitsMax;
+            int unitCost = GameManager.Instance.ExtractionUnitCost;
+
+            reponerUnidades(money, ref unitMax, ref unitCost);
+
+            if (money > unitCost && MisExtractores.Count < unitMax && !ExtractorJustCreated)
+            {
+                Extractor actExtractor = new Extractor(GameManager.Instance.CreateUnit(this, MiBase[0],
+                    GameManager.UnitType.EXTRACTION).GetComponent<ExtractionUnit>());
+
+                //Asignarle un campo de melagne, que no se como se hace
+
+                ExtractorJustCreated = true;
+            }
+
+            unitMax = GameManager.Instance.ExplorationUnitsMax;
+            unitCost = GameManager.Instance.ExplorationUnitCost;
+
+            if (money > unitCost && MisExploradores.Count < unitMax)
+            {
+                ExplorationUnit newRecon = (ExplorationUnit)GameManager.Instance.CreateUnit(this, MiBase[0], GameManager.UnitType.EXPLORATION);
+
+                MisExploradores.Add(newRecon);
+            }
+
+            unitMax = GameManager.Instance.DestructionUnitsMax;
+            unitCost = GameManager.Instance.DestructionUnitCost;
+
+            if (money > unitCost && MisDestructores.Count < unitMax)
+            {
+                DestructionUnit newDest = (DestructionUnit)GameManager.Instance.CreateUnit(this, MiBase[0], GameManager.UnitType.DESTRUCTION);
+
+                MisDestructores.Add(newDest);
+            }
+        }
+
+        private void reponerUnidades(int money, ref int unitMax, ref int unitCost)
+        {
+            if (MisExtractores.Count < minDesiredExtractors)
+            {
+                if (money > unitCost && MisExploradores.Count < unitMax)
+                {
+                    ExplorationUnit newRecon = (ExplorationUnit)GameManager.Instance.CreateUnit(this, MiBase[0], GameManager.UnitType.EXPLORATION);
+
+
+                    MisExploradores.Add(newRecon);
+                }
+            }
+            else if (MisExploradores.Count < minDesiredExplorers)
+            {
+                unitMax = GameManager.Instance.ExplorationUnitsMax;
+                unitCost = GameManager.Instance.ExplorationUnitCost;
+
+                if (money > unitCost && MisExploradores.Count < unitMax)
+                {
+                    ExplorationUnit newRecon = (ExplorationUnit)GameManager.Instance.CreateUnit(this, MiBase[0], GameManager.UnitType.EXPLORATION);
+
+                    MisExploradores.Add(newRecon);
+                }
+            }
+            else if (MisDestructores.Count < minDesiredDestructors)
+            {
+                unitMax = GameManager.Instance.DestructionUnitsMax;
+                unitCost = GameManager.Instance.DestructionUnitCost;
+
+                if (money > unitCost && MisDestructores.Count < unitMax)
+                {
+                    DestructionUnit newDest = (DestructionUnit)GameManager.Instance.CreateUnit(this, MiBase[0], GameManager.UnitType.DESTRUCTION);
+
+                    MisDestructores.Add(newDest);
+                }
+            }
+        }
+
+        private void sendDestructorsToEnemyBase()
+        {
+            for (int i = 0; i < MisDestructores.Count; i++)
+            {
+                bool Menaced = MisDestructores[i].IsMenaced();
+                Transform destiny;
+
+                if (Menaced) destiny = MiBase[0].transform;
+                else destiny = EnemyBase[0].transform;
+
+                Vector3 dist = EnemyBase[0].transform.position - MisDestructores[i].transform.position;
+
+                if (dist.magnitude < MisDestructores[i].Radius) MisDestructores[0].Attack(this, EnemyBase[0].transform.position);
+                else MisDestructores[0].Move(this, destiny);
+            }
         }
 
         private void attackEconomie()

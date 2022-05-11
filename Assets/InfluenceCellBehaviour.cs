@@ -86,21 +86,21 @@ namespace es.ucm.fdi.iav.rts.G02 {
             {
                 case Team.Fremen:
                     fremenUnits.Remove(unit_);
-                    if (unit_.unit.Equals(Unit.Attack))
+                    if (unit_.unit.Equals(UnitPurpose.Attack))
                     {
                         fremenPriority -= influ;
                     }
                     break;
                 case Team.Graben:
                     grabenUnits.Remove(unit_);
-                    if (unit_.unit.Equals(Unit.Attack))
+                    if (unit_.unit.Equals(UnitPurpose.Attack))
                     {
                         grabenPriority -= influ;
                     }
                     break;
                 case Team.Harkonnen:
                     harkonnenUnits.Remove(unit_);
-                    if (unit_.unit.Equals(Unit.Attack))
+                    if (unit_.unit.Equals(UnitPurpose.Attack))
                     {
                         harkonnenPriority -= influ;
                     }
@@ -119,21 +119,21 @@ namespace es.ucm.fdi.iav.rts.G02 {
             {
                 case Team.Fremen:
                     fremenUnits.Add(unit_);
-                    if (unit_.unit.Equals(Unit.Attack))
+                    if (unit_.unit.Equals(UnitPurpose.Attack))
                     {
                         fremenPriority += influ;
                     }
                     break;
                 case Team.Graben:
                     grabenUnits.Add(unit_);
-                    if (unit_.unit.Equals(Unit.Attack))
+                    if (unit_.unit.Equals(UnitPurpose.Attack))
                     {
                         grabenPriority += influ;
                     }
                     break;
                 case Team.Harkonnen:
                     harkonnenUnits.Add(unit_);
-                    if (unit_.unit.Equals(Unit.Attack))
+                    if (unit_.unit.Equals(UnitPurpose.Attack))
                     {
                         harkonnenPriority += influ;
                     }
@@ -208,7 +208,7 @@ namespace es.ucm.fdi.iav.rts.G02 {
         }
 
         //Actualiza la influencia de la casilla cuando ha entrado una nueva unidad
-        private void ModificaInfluenciaAlEntrar(Team teamType_, Unit unit_, int infl_)
+        private void ModificaInfluenciaAlEntrar(Team teamType_, UnitPurpose unit_, int infl_)
         {
             if (currMiliPrio < 0)
             {
@@ -224,7 +224,7 @@ namespace es.ucm.fdi.iav.rts.G02 {
             if (teamType_.Equals(team) || team.Equals(Team.None) || team.Equals(Team.VOID))
             {
                 //Si es una unidad militar
-                if (unit_.Equals(Unit.Attack))
+                if (unit_.Equals(UnitPurpose.Attack))
                 {
                     //La casilla es del equipo de la unidad entrante
                     team = teamType_;
@@ -252,7 +252,7 @@ namespace es.ucm.fdi.iav.rts.G02 {
             else if (!teamType_.Equals(team))
             {
                 //es una unidad Militar
-                if (unit_.Equals(Unit.Attack))
+                if (unit_.Equals(UnitPurpose.Attack))
                 {
                     //cogemos el team con mayor influencia en la casilla
                     team = GetMayorPrio();
@@ -279,7 +279,7 @@ namespace es.ucm.fdi.iav.rts.G02 {
         }
 
         //Actualiza la influencia de la casilla cuando ha salida una unidad
-        private void ModificaInfluenciaAlSalir(Team teamType_, Unit unit_, int infl_)
+        private void ModificaInfluenciaAlSalir(Team teamType_, UnitPurpose unit_, int infl_)
         {
             if (currMiliPrio < 0)
             {
@@ -294,7 +294,7 @@ namespace es.ucm.fdi.iav.rts.G02 {
             if (teamType_.Equals(team) || team.Equals(Team.None))
             {
                 //si es militar
-                if (unit_.Equals(Unit.Attack))
+                if (unit_.Equals(UnitPurpose.Attack))
                 {
                     team = GetMayorPrio();
 
@@ -323,7 +323,7 @@ namespace es.ucm.fdi.iav.rts.G02 {
             else if (!teamType_.Equals(team))
             {
                 //si soy de defensa
-                if (!unit_.Equals(Unit.Attack))
+                if (!unit_.Equals(UnitPurpose.Attack))
                 {
                     switch (teamType_)
                     {

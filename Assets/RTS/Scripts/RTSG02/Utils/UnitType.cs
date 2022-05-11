@@ -10,7 +10,7 @@ namespace es.ucm.fdi.iav.rts.G02
         [Tooltip("Dueño de esta unidad")]
         public Team team;
         [Tooltip("Tipo de unidad")]
-        public Unit unit;
+        public UnitPurpose unit;
         [Tooltip("Cantidad de puntos de influencia de esta unidad")]
         public int influencia;
         [Tooltip("Rango de influencia de esta unidad")]

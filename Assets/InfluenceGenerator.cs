@@ -82,7 +82,7 @@ namespace es.ucm.fdi.iav.rts.G02
         {
             casilla.UnidadEntraCasilla(unit_, unit_.influencia);
 
-            if (unit_.unit == Unit.Defense) return;
+            if (unit_.unit == UnitPurpose.Defense) return;
 
             //Casillas adyacentes
             for (int i = casilla.fil - unit_.rango; i <= casilla.fil + unit_.rango; i++)
@@ -115,7 +115,7 @@ namespace es.ucm.fdi.iav.rts.G02
         public void ActualizaPrioridadAlSalir(InfluenceCellBehaviour casilla, UnitType unit_)
         {
             casilla.UnityOnOut(unit_, unit_.influencia);
-            if (unit_.unit == Unit.Defense) return;
+            if (unit_.unit == UnitPurpose.Defense) return;
 
             int inf = unit_.influencia - 1;
             //recorremos la submatriz correspondiente
