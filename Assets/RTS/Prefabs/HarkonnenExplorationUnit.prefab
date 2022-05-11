@@ -78,7 +78,7 @@ MonoBehaviour:
   _externalBehavior: {fileID: 11400000, guid: 874447a507de6e5478c7f1904c860f18, type: 2}
   _maxPositions: 20
   _radius: 8
-  _attackDamage: 100
+  _attackDamage: 1
   _attackTime: 0.5
   _attackDistance: 12
 --- !u!114 &11400000
