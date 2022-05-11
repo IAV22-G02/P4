@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 8076260491430585031}
   - component: {fileID: 2613075214253095087}
   - component: {fileID: -1270721341068084643}
+  - component: {fileID: 1523179894611187493}
   m_Layer: 9
   m_Name: HarkonnenExtractionUnit
   m_TagString: Untagged
@@ -356,6 +357,22 @@ CapsuleCollider:
   m_Height: 1.5
   m_Direction: 2
   m_Center: {x: 0, y: 0.5, z: -0.15}
+--- !u!114 &1523179894611187493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5314750715208388521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e96e11eb543c9247869db9e5a2d4771, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 1
+  unit: 0
+  influencia: 1
+  rango: 1
 --- !u!1 &5314750715479662723
 GameObject:
   m_ObjectHideFlags: 0
