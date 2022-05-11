@@ -25,7 +25,7 @@ namespace es.ucm.fdi.iav.rts.G02
 
 
         //Enum para determinar que queremos hacer
-        enum Prioridades { DestroyNeutralCamp, Defense, CreateUnits, HurtEnemieEconomie, Attack }
+        enum Prioridades { DestroyNeutralCamp, DefenseBase, DefenseWorkers, CreateUnits, HurtEnemieEconomie, Attack }
 
         private GUIStyle _labelStyle;
         private GUIStyle _labelSmallStyle;
@@ -61,6 +61,7 @@ namespace es.ucm.fdi.iav.rts.G02
         private List<ExtractionUnit> EnemyExtractores;
 
         private Prioridades prioridad;
+        private PlayStyle ps;
 
         bool ExtractorJustCreated = false;
 
@@ -93,14 +94,13 @@ namespace es.ucm.fdi.iav.rts.G02
             MisDestructores = new List<DestructionUnit>();
 
             //Chosing playStyle
-            PlayStyle ps = (PlayStyle)Random.Range(0, 2);
+            ps = (PlayStyle)Random.Range(0, 2);
 
             //Empieza con un rush para dañar la economia enemiga
             if (ps == PlayStyle.Agressive) prioridad = Prioridades.HurtEnemieEconomie;
             else if (ps == PlayStyle.Pasives) prioridad = Prioridades.CreateUnits; //Si es pasivo, se encarga de defender y aumentar su economia
 
-
-            Debug.Log("Hola soy alguien");
+            Debug.Log(ps);
         }
 
         // El método de pensar que sobreescribe e implementa el controlador, para percibir (hacer mapas de influencia, etc.) y luego actuar.
@@ -117,6 +117,8 @@ namespace es.ucm.fdi.iav.rts.G02
             //Si conseguimos dañar suficiente la economia enemiga, atacamos
             if (EnemyExtractores.Count == 0) prioridad = Prioridades.Attack;
 
+            checkWorkersState();
+
             switch (prioridad)
             {
                 case Prioridades.HurtEnemieEconomie:
@@ -132,7 +134,7 @@ namespace es.ucm.fdi.iav.rts.G02
                     sendDestructorsToEnemyBase();
 
                     //Despues de intentar atacar el nexo enemigo, defendemos
-                    prioridad = Prioridades.Defense;
+                    prioridad = Prioridades.DefenseBase;
 
                     break;
 
@@ -143,13 +145,22 @@ namespace es.ucm.fdi.iav.rts.G02
                     //Si tengo más destructores que el enemigo, intento ganar
                     if (EnemyDestructores.Count < MisDestructores.Count) prioridad = Prioridades.Attack;
                     else if (EnemyExploradores.Count <= MisExploradores.Count) prioridad = Prioridades.HurtEnemieEconomie;
-                    else prioridad = Prioridades.Defense;
+                    else prioridad = Prioridades.DefenseBase;
 
                     break;
 
-                case Prioridades.Defense:
+                case Prioridades.DefenseBase:
 
                     defenseTheBase();
+
+                    break;
+
+                case Prioridades.DefenseWorkers:
+
+                    for(int i = 0; i < MisExploradores.Count; i++)
+                    {
+                        MisExploradores[i].Move(this, MisExtractores[i].getExtractor().transform);
+                    }
 
                     break;
 
@@ -157,6 +168,42 @@ namespace es.ucm.fdi.iav.rts.G02
 
 
             ThinkStepNumber++;
+        }
+
+        private void checkWorkersState()
+        {
+            bool workersUnderAttack = false;
+            for (int i = 0; i < MisExtractores.Count && !workersUnderAttack; i++)
+            {
+                for (int e = 0; e < EnemyExploradores.Count && !workersUnderAttack; e++)
+                {
+                    Vector3 distExp = MisExtractores[i].getExtractor().transform.position - EnemyExploradores[e].transform.position;
+
+                    if (distExp.magnitude < MisExtractores[i].getExtractor().Radius)
+                    {
+                        prioridad = Prioridades.DefenseWorkers;
+
+                        workersUnderAttack = true;
+                    }
+
+                }
+
+                for (int d = 0; d < EnemyDestructores.Count && !workersUnderAttack; d++)
+                {
+                    Vector3 distExp = MisExtractores[i].getExtractor().transform.position - EnemyDestructores[d].transform.position;
+
+                    if (distExp.magnitude < MisExtractores[i].getExtractor().Radius)
+                    {
+                        prioridad = Prioridades.DefenseWorkers;
+
+                        workersUnderAttack = true;
+                    }
+
+                }
+            }
+
+            if (!workersUnderAttack && ps == PlayStyle.Agressive) prioridad = Prioridades.HurtEnemieEconomie;
+            else if (!workersUnderAttack && ps == PlayStyle.Pasives) prioridad = Prioridades.CreateUnits;
         }
 
         private void defenseTheBase()
