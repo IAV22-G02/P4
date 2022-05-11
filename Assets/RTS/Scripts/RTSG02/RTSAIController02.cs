@@ -3,10 +3,10 @@
    http://www.federicopeinado.com
 
    Este fichero forma parte del material de la asignatura Inteligencia Artificial para Videojuegos.
-   Esta asignatura se imparte en la Facultad de Informática de la Universidad Complutense de Madrid (España).
+   Esta asignatura se imparte en la Facultad de Informï¿½tica de la Universidad Complutense de Madrid (Espaï¿½a).
 
    Autores originales: Opsive (Behavior Designer Samples)
-   Revisión: Federico Peinado 
+   Revisiï¿½n: Federico Peinado 
    Contacto: email@federicopeinado.com
 */
 using System.Collections.Generic;
@@ -15,9 +15,9 @@ using UnityEngine;
 namespace es.ucm.fdi.iav.rts.G02
 {
     /*
-     * Ejemplo básico sobre cómo crear un controlador basado en IA para el minijuego RTS.
-     * Únicamente mandan unas órdenes cualquiera, para probar cosas aleatorias... 
-     * pero no realiza análisis táctico, ni considera puntos de ruta tácticos, ni coordina acciones de ningún tipo .
+     * Ejemplo bï¿½sico sobre cï¿½mo crear un controlador basado en IA para el minijuego RTS.
+     * ï¿½nicamente mandan unas ï¿½rdenes cualquiera, para probar cosas aleatorias... 
+     * pero no realiza anï¿½lisis tï¿½ctico, ni considera puntos de ruta tï¿½cticos, ni coordina acciones de ningï¿½n tipo .
      */
     public class RTSAIController02 : RTSAIController
     {
@@ -34,10 +34,10 @@ namespace es.ucm.fdi.iav.rts.G02
         public int minDesiredDestructors = 2;
         public int minDesiredExplorers = 2;
 
-        // No necesita guardar mucha información porque puede consultar la que desee por sondeo,
-        // incluida toda la información de instalaciones y unidades, tanto propias como ajenas
+        // No necesita guardar mucha informaciï¿½n porque puede consultar la que desee por sondeo,
+        // incluida toda la informaciï¿½n de instalaciones y unidades, tanto propias como ajenas
 
-        // Mi ú‹dice de controlador y un par de instalaciones para referenciar
+        // Mi ï¿½ï¿½dice de controlador y un par de instalaciones para referenciar
         private int MyIndex { get; set; }
         private int FirstEnemyIndex { get; set; }
         private BaseFacility MyFirstBaseFacility { get; set; }
@@ -67,21 +67,20 @@ namespace es.ucm.fdi.iav.rts.G02
         bool workersUnderAttack = false;
         bool baseUnderAttack = false;
 
-        // Número de paso de pensamiento 
+        // Nï¿½mero de paso de pensamiento 
         private int ThinkStepNumber { get; set; } = 0;
 
-        // Última unidad creada
+        // ï¿½ltima unidad creada
         private UnitPurpose LastUnit { get; set; }
 
         // Despierta el controlado y configura toda estructura interna que sea necesaria
         private void Awake()
         {
-            Debug.Log("dadawda");
             Name = "Example 2";
 
             Author = "Jose Daniel Rave Robayo | " +
-                     " Ángel López Benitez |" +
-                     " Iván Prado Echegaray" +
+                     " ï¿½ngel Lï¿½pez Benitez |" +
+                     " Ivï¿½n Prado Echegaray" +
                      "Juan Diego Mendoza Reyes";
 
             _labelStyle = new GUIStyle();
@@ -99,14 +98,13 @@ namespace es.ucm.fdi.iav.rts.G02
             //Chosing playStyle
             ps = (PlayStyle)Random.Range(0, 2);
 
-            //Empieza con un rush para dañar la economia enemiga
+            //Empieza con un rush para daï¿½ar la economia enemiga
             if (ps == PlayStyle.Agressive) prioridad = Prioridades.HurtEnemieEconomie;
             else if (ps == PlayStyle.Pasives) prioridad = Prioridades.CreateUnits; //Si es pasivo, se encarga de defender y aumentar su economia
 
-            Debug.Log(ps);
         }
 
-        // El método de pensar que sobreescribe e implementa el controlador, para percibir (hacer mapas de influencia, etc.) y luego actuar.
+        // El mï¿½todo de pensar que sobreescribe e implementa el controlador, para percibir (hacer mapas de influencia, etc.) y luego actuar.
         protected override void Think()
         {
             getIndexes();
@@ -117,20 +115,18 @@ namespace es.ucm.fdi.iav.rts.G02
 
             ScanEnemy();
 
-            //Si conseguimos dañar suficiente la economia enemiga, atacamos
+            //Si conseguimos daï¿½ar suficiente la economia enemiga, atacamos
             if (EnemyExtractores.Count == 0) prioridad = Prioridades.Attack;
 
             checkWorkersState();
 
             checkBase();
 
-            if (workersUnderAttack) prioridad = Prioridades.DefenseWorkers;
-            else if (baseUnderAttack) prioridad = Prioridades.DefenseBase;
+            if ((MisDestructores.Count == GameManager.Instance.DestructionUnitsMax ||
+                MisExploradores.Count == GameManager.Instance.ExplorationUnitsMax) && prioridad != Prioridades.DefenseBase) 
+                prioridad = Prioridades.Attack;
 
-            if (MisDestructores.Count == GameManager.Instance.DestructionUnitsMax ||
-                MisExploradores.Count == GameManager.Instance.ExplorationUnitsMax) prioridad = Prioridades.Attack;
-
-            Debug.Log(Name + ":" + prioridad);
+            Debug.Log("PRIORIZAME ESTA CRACK -> " + prioridad);
 
             switch (prioridad)
             {
@@ -139,7 +135,6 @@ namespace es.ucm.fdi.iav.rts.G02
 
                     //Despues de atacar priorizamos crear unidades
                     if (MisExploradores.Count < minDesiredExplorers) prioridad = Prioridades.CreateUnits;
-                    else prioridad = Prioridades.Attack;
 
                     break;
 
@@ -155,11 +150,10 @@ namespace es.ucm.fdi.iav.rts.G02
                 case Prioridades.CreateUnits:
 
                     compras();
+                    //Si tengo mï¿½s destructores que el enemigo, intento ganar
+                    if (EnemyDestructores.Count < MisDestructores.Count || MisDestructores.Count >= GameManager.Instance.DestructionUnitsMax) 
+                        prioridad = Prioridades.Attack;
 
-                    //Si tengo más destructores que el enemigo, intento ganar
-                    if (EnemyDestructores.Count <= MisDestructores.Count) prioridad = Prioridades.Attack;
-                    else if (EnemyExploradores.Count <= MisExploradores.Count) prioridad = Prioridades.HurtEnemieEconomie;
-                    else prioridad = Prioridades.DefenseBase;
 
                     break;
 
@@ -184,14 +178,13 @@ namespace es.ucm.fdi.iav.rts.G02
                     break;
 
             }
-
-
             ThinkStepNumber++;
         }
 
         private void checkWorkersState()
         {
             workersUnderAttack = false;
+
             for (int i = 0; i < MisExtractores.Count && !workersUnderAttack; i++)
             {
                 for (int e = 0; e < EnemyExploradores.Count && !workersUnderAttack; e++)
@@ -221,11 +214,12 @@ namespace es.ucm.fdi.iav.rts.G02
                 }
             }
 
-            if (!workersUnderAttack && ps == PlayStyle.Agressive) prioridad = Prioridades.HurtEnemieEconomie;
-            else if (!workersUnderAttack && ps == PlayStyle.Pasives) prioridad = Prioridades.CreateUnits;
-
-
-            if (MisDestructores.Count < GameManager.Instance.DestructionUnitsMax) prioridad = Prioridades.Attack;
+            if (!workersUnderAttack && ps == PlayStyle.Agressive && EnemyExploradores.Count < MisExploradores.Count) 
+                prioridad = Prioridades.HurtEnemieEconomie;
+            else if (!workersUnderAttack && ps == PlayStyle.Pasives && MisExploradores.Count < GameManager.Instance.ExplorationUnitsMax) 
+                prioridad = Prioridades.CreateUnits;
+            else if(!workersUnderAttack && ps == PlayStyle.Pasives && MisExploradores.Count < GameManager.Instance.ExplorationUnitsMax)
+                prioridad = Prioridades.HurtEnemieEconomie;
         }
 
         private void checkBase()
@@ -259,8 +253,14 @@ namespace es.ucm.fdi.iav.rts.G02
             }
 
 
-            if (!baseUnderAttack && ps == PlayStyle.Agressive) prioridad = Prioridades.HurtEnemieEconomie;
-            else if (!baseUnderAttack && ps == PlayStyle.Pasives) prioridad = Prioridades.CreateUnits;
+            if (!baseUnderAttack && ps == PlayStyle.Agressive && EnemyExploradores.Count < MisExploradores.Count)
+                prioridad = Prioridades.HurtEnemieEconomie;
+            else { 
+                if (!baseUnderAttack && ps == PlayStyle.Pasives && MisExploradores.Count < GameManager.Instance.ExplorationUnitsMax)
+                    prioridad = Prioridades.CreateUnits;
+                else if (!workersUnderAttack && ps == PlayStyle.Pasives && MisExploradores.Count < GameManager.Instance.ExplorationUnitsMax)
+                    prioridad = Prioridades.HurtEnemieEconomie;
+            }
 
 
         }
@@ -274,7 +274,7 @@ namespace es.ucm.fdi.iav.rts.G02
                 destiny = MiBase[0].transform;
 
                 MisDestructores[i].Move(this, destiny);
-
+                Debug.Log("adfaedfaewfesfaefawef");
             }
 
             for (int i = 0; i < MisExploradores.Count; i++)
@@ -282,14 +282,17 @@ namespace es.ucm.fdi.iav.rts.G02
                 MisExploradores[i].Move(this, MiBase[0].transform);
             }
 
-            if (EnemyDestructores.Count < MisDestructores.Count) prioridad = Prioridades.Attack;
-            else if (EnemyExploradores.Count < MisExploradores.Count) prioridad = Prioridades.HurtEnemieEconomie;
-            else prioridad = Prioridades.CreateUnits;
+            if (EnemyDestructores.Count < MisDestructores.Count || MisDestructores.Count >= GameManager.Instance.DestructionUnitsMax) 
+                prioridad = Prioridades.Attack;
+            else if (MisExploradores.Count >= GameManager.Instance.ExplorationUnitsMax) 
+                prioridad = Prioridades.HurtEnemieEconomie;
+            else 
+                prioridad = Prioridades.CreateUnits;
         }
 
         private void compras()
         {
-            //Priorizamos nuestra propia economia, creamos alguna unidad recolectora adicional para jugar más a Macro Game
+            //Priorizamos nuestra propia economia, creamos alguna unidad recolectora adicional para jugar mï¿½s a Macro Game
             int money = GameManager.Instance.GetMoney(MyIndex);
             int unitMax = GameManager.Instance.ExtractionUnitsMax;
             int unitCost = GameManager.Instance.ExtractionUnitCost;
@@ -378,8 +381,8 @@ namespace es.ucm.fdi.iav.rts.G02
 
                 Vector3 dist = EnemyBase[0].transform.position - MisDestructores[i].transform.position;
 
-                if (dist.magnitude < MisDestructores[i].Radius) MisDestructores[0].Attack(this, EnemyBase[0].transform.position);
-                else MisDestructores[0].Move(this, destiny);
+                if (dist.magnitude < MisDestructores[i].Radius) MisDestructores[i].Attack(this, EnemyBase[0].transform.position);
+                else MisDestructores[i].Move(this, destiny);
             }
         }
 
@@ -393,7 +396,15 @@ namespace es.ucm.fdi.iav.rts.G02
                 Transform destiny;
 
                 if (Menaced) destiny = MiBase[0].transform;
-                else destiny = EnemyExtractores[0].transform;
+                else
+                {
+                    int j = 0;
+                    while (j < EnemyExtractores.Count && EnemyExtractores[j] != null) j++;
+                    if(j < EnemyExtractores.Count)
+                        destiny = EnemyExtractores[j].transform;
+                    else
+                        destiny = EnemyBase[0].transform;
+                }
 
                 MisExploradores[i].Move(this, destiny);
             }
@@ -427,7 +438,7 @@ namespace es.ucm.fdi.iav.rts.G02
 
         private void getUnits()
         {
-            //Creamos el número minimo de unidades extractoras
+            //Creamos el nï¿½mero minimo de unidades extractoras
             while (MisExtractores.Count < minDesiredExtractors)
             {
 
