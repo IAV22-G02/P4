@@ -65,6 +65,7 @@ namespace es.ucm.fdi.iav.rts.G02
 
         bool ExtractorJustCreated = false;
         bool workersUnderAttack = false;
+        bool baseUnderAttack = false;
 
         // Número de paso de pensamiento 
         private int ThinkStepNumber { get; set; } = 0;
@@ -120,6 +121,8 @@ namespace es.ucm.fdi.iav.rts.G02
             if (EnemyExtractores.Count == 0) prioridad = Prioridades.Attack;
 
             checkWorkersState();
+
+            checkBase();
 
             switch (prioridad)
             {
@@ -206,6 +209,41 @@ namespace es.ucm.fdi.iav.rts.G02
 
             if (!workersUnderAttack && ps == PlayStyle.Agressive) prioridad = Prioridades.HurtEnemieEconomie;
             else if (!workersUnderAttack && ps == PlayStyle.Pasives) prioridad = Prioridades.CreateUnits;
+        }
+
+        private void checkBase()
+        {
+
+            baseUnderAttack = false;
+            for (int e = 0; e < EnemyExploradores.Count && !baseUnderAttack; e++)
+            {
+                Vector3 distExp = MiBase[0].transform.position - EnemyExploradores[e].transform.position;
+
+                if (distExp.magnitude < MiBase[0].Radius)
+                {
+                    prioridad = Prioridades.DefenseBase;
+
+                    baseUnderAttack = true;
+                }
+
+            }
+
+            for (int d = 0; d < EnemyDestructores.Count && !baseUnderAttack; d++)
+            {
+                Vector3 distExp = MiBase[0].transform.position - EnemyDestructores[d].transform.position;
+
+                if (distExp.magnitude < MiBase[0].Radius)
+                {
+                    prioridad = Prioridades.DefenseBase;
+
+                    baseUnderAttack = true;
+                }
+
+            }
+
+
+            if (!baseUnderAttack && ps == PlayStyle.Agressive) prioridad = Prioridades.HurtEnemieEconomie;
+            else if (!baseUnderAttack && ps == PlayStyle.Pasives) prioridad = Prioridades.CreateUnits;
         }
 
         private void defenseTheBase()
