@@ -64,6 +64,7 @@ namespace es.ucm.fdi.iav.rts.G02
         private PlayStyle ps;
 
         bool ExtractorJustCreated = false;
+        bool workersUnderAttack = false;
 
         // Número de paso de pensamiento 
         private int ThinkStepNumber { get; set; } = 0;
@@ -158,7 +159,7 @@ namespace es.ucm.fdi.iav.rts.G02
 
                 case Prioridades.DefenseWorkers:
 
-                    for(int i = 0; i < MisExploradores.Count; i++)
+                    for (int i = 0; i < MisExploradores.Count; i++)
                     {
                         MisExploradores[i].Move(this, MisExtractores[i].getExtractor().transform);
                     }
@@ -173,7 +174,7 @@ namespace es.ucm.fdi.iav.rts.G02
 
         private void checkWorkersState()
         {
-            bool workersUnderAttack = false;
+            workersUnderAttack = false;
             for (int i = 0; i < MisExtractores.Count && !workersUnderAttack; i++)
             {
                 for (int e = 0; e < EnemyExploradores.Count && !workersUnderAttack; e++)
