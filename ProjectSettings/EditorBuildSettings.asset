@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/RTS/Scene/RTSScenario 1.unity
+    guid: 20d0805e1cedff2458849b1dd6bca8d3
+  - enabled: 1
     path: Assets/RTS/Scene/RTSScenario 2.unity
     guid: ff64c446f5c3ff04d9103df9ece8f0ff
+  - enabled: 1
+    path: Assets/RTS/Scene/RTSScenario 3.unity
+    guid: 390a9d0efc219b14d9fa88b444b43d2a
   m_configObjects: {}
